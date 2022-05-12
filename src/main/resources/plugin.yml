@@ -1,0 +1,8 @@
+name: DevelopcraftLobby
+version: '${version}'
+main: com.teenkung.devlobby.DevLobby
+api-version: 1.18
+prefix: DevLobby
+authors: [ Teenkung123 ]
+description: Lobby plugin for Developcraft network
+website: http://mc-developcraft.net

@@ -1,0 +1,9 @@
+Database:
+  Host: localhost
+  Port: 3310
+  Username: root
+  Password: minecraft
+  Database: minigame
+
+Settings:
+  Topup-Multipier: 1.0
