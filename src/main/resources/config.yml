@@ -5,5 +5,11 @@ Database:
   Password: minecraft
   Database: minigame
 
+Module:
+  Lobby-Selector: true
+  Player-Options: true
+  Rank-Upgrade: true
+  PVP: true
+
 Settings:
   Topup-Multipier: 1.0

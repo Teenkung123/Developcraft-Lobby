@@ -46,7 +46,8 @@ public class LobbyDatabase {
                     "JoinFirework BOOLEAN," +
                     "Vanish BOOLEAN," +
                     "HidePlayer BOOLEAN," +
-                    "" +
+                    "SpeedBoost BOOLEAN," +
+                    "JumpBoost BOOLEAN," +
                     ");");
         } catch (SQLException e) {
             e.printStackTrace();
