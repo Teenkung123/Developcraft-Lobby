@@ -24,7 +24,7 @@ public class PlayerOptionGUI {
             }
             //Join Message
             else if (i == 12) {
-                if (SQLManager.getPlayer(player).getFly()) {
+                if (SQLManager.getPlayer(player).getJoinMessage()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, false));
@@ -32,7 +32,7 @@ public class PlayerOptionGUI {
             }
             //Join Firework
             else if (i == 14) {
-                if (SQLManager.getPlayer(player).getFly()) {
+                if (SQLManager.getPlayer(player).getJoinFirework()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, false));
@@ -40,31 +40,31 @@ public class PlayerOptionGUI {
             }
             //Vanish
             else if (i == 16) {
-                if (SQLManager.getPlayer(player).getFly()) {
+                if (SQLManager.getPlayer(player).getVanish()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, false));
                 }
             }
             //Player Hide
-            else if (i == 19) {
-                if (SQLManager.getPlayer(player).getFly()) {
+            else if (i == 28) {
+                if (SQLManager.getPlayer(player).getHidePlayer()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, false));
                 }
             }
             //Speed Boost
-            else if (i == 21) {
-                if (SQLManager.getPlayer(player).getFly()) {
+            else if (i == 30) {
+                if (SQLManager.getPlayer(player).getSpeedBoost()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, false));
                 }
             }
             //Jump Boost
-            else if (i == 23) {
-                if (SQLManager.getPlayer(player).getFly()) {
+            else if (i == 32) {
+                if (SQLManager.getPlayer(player).getJumpBoost()) {
                     inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, true));
                 } else {
                     inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, false));

@@ -1,6 +1,6 @@
 package com.teenkung.devlobby.GUIs.PlayerOption;
 
-public enum PlayerOptionEnum {
+enum PlayerOptionEnum {
 
     FLY,JOINMESSAGE,JOINFIREWORK,VANISH,HIDEPLAYER,SPEEDBOOST,JUMPBOOST,EGLOW,UNKNOWN;
 

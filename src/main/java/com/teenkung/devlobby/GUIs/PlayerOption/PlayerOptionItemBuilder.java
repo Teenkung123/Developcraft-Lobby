@@ -5,6 +5,7 @@ import com.teenkung.devlobby.Utils.ConfigLoader;
 import com.teenkung.devlobby.Utils.ItemBuilder;
 import com.teenkung.devlobby.Utils.Rank;
 import com.teenkung.devlobby.Utils.SQLManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,31 +44,33 @@ public class PlayerOptionItemBuilder {
 
 
     public static void updateItemBuilder() {
-        FlyItem = new ItemBuilder(Material.FEATHER, 1).setDisplayName(colorize(ConfigLoader.getFlyItemName()));
-        JoinMessage = new ItemBuilder(Material.COMMAND_BLOCK, 1).setDisplayName(colorize(ConfigLoader.getJoinMessageItemName()));
-        JoinFirework = new ItemBuilder(Material.FIREWORK_ROCKET, 1).setDisplayName(colorize(ConfigLoader.getJoinFireworkItemName()));
-        Vanish = new ItemBuilder(Material.GLASS_BOTTLE, 1).setDisplayName(colorize(ConfigLoader.getVanishItemName()));
-        HidePlayerOff = new ItemBuilder(Material.GRAY_DYE, 1).setDisplayName(colorize(ConfigLoader.getHidePlayerItemName()));
-        HidePlayerOn = new ItemBuilder(Material.GREEN_DYE, 1).setDisplayName(colorize(ConfigLoader.getHidePlayerItemName()));
-        SpeedBoost = new ItemBuilder(Material.SUGAR, 1).setDisplayName(colorize(ConfigLoader.getSpeedBoostItemName()));
-        JumpBoost = new ItemBuilder(Material.RABBIT_FOOT, 1).setDisplayName(colorize(ConfigLoader.getJumpBoostItemName()));
+        Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
+            FlyItem = new ItemBuilder(Material.FEATHER, 1).setDisplayName(colorize(ConfigLoader.getFlyItemName()));
+            JoinMessage = new ItemBuilder(Material.COMMAND_BLOCK, 1).setDisplayName(colorize(ConfigLoader.getJoinMessageItemName()));
+            JoinFirework = new ItemBuilder(Material.FIREWORK_ROCKET, 1).setDisplayName(colorize(ConfigLoader.getJoinFireworkItemName()));
+            Vanish = new ItemBuilder(Material.GLASS_BOTTLE, 1).setDisplayName(colorize(ConfigLoader.getVanishItemName()));
+            HidePlayerOff = new ItemBuilder(Material.LIME_DYE, 1).setDisplayName(colorize(ConfigLoader.getHidePlayerItemName()));
+            HidePlayerOn = new ItemBuilder(Material.GRAY_DYE, 1).setDisplayName(colorize(ConfigLoader.getHidePlayerItemName()));
+            SpeedBoost = new ItemBuilder(Material.SUGAR, 1).setDisplayName(colorize(ConfigLoader.getSpeedBoostItemName()));
+            JumpBoost = new ItemBuilder(Material.RABBIT_FOOT, 1).setDisplayName(colorize(ConfigLoader.getJumpBoostItemName()));
 
-        FlyItemLore = ConfigLoader.getFlyItemLore();
-        JoinMessageLore = ConfigLoader.getJoinMessageItemLore();
-        JoinFireworkLore = ConfigLoader.getJoinFireworkItemLore();
-        VanishLore = ConfigLoader.getVanishItemLore();
-        HidePlayerLore = ConfigLoader.getHidePlayerItemLore();
-        SpeedBoostLore = ConfigLoader.getSpeedBoostItemLore();
-        JumpBoostLore = ConfigLoader.getJumpBoostItemLore();
+            FlyItemLore = ConfigLoader.getFlyItemLore();
+            JoinMessageLore = ConfigLoader.getJoinMessageItemLore();
+            JoinFireworkLore = ConfigLoader.getJoinFireworkItemLore();
+            VanishLore = ConfigLoader.getVanishItemLore();
+            HidePlayerLore = ConfigLoader.getHidePlayerItemLore();
+            SpeedBoostLore = ConfigLoader.getSpeedBoostItemLore();
+            JumpBoostLore = ConfigLoader.getJumpBoostItemLore();
 
-        FlyItemRank = ConfigLoader.getFlyItemRequirement();
-        JoinMessageRank = ConfigLoader.getJoinMessageItemRequirement();
-        JoinFireworkRank = ConfigLoader.getJoinFireworkItemRequirement();
-        VanishRank = ConfigLoader.getVanishItemRequirement();
-        HidePlayerRank = ConfigLoader.getHidePlayerItemRequirement();
-        SpeedBoostRank = ConfigLoader.getSpeedBoostItemRequirement();
-        JumpBoostRank = ConfigLoader.getJumpBoostItemRequirement();
-        EGlowRank = Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.EGlow.RequireRank"));
+            FlyItemRank = ConfigLoader.getFlyItemRequirement();
+            JoinMessageRank = ConfigLoader.getJoinMessageItemRequirement();
+            JoinFireworkRank = ConfigLoader.getJoinFireworkItemRequirement();
+            VanishRank = ConfigLoader.getVanishItemRequirement();
+            HidePlayerRank = ConfigLoader.getHidePlayerItemRequirement();
+            SpeedBoostRank = ConfigLoader.getSpeedBoostItemRequirement();
+            JumpBoostRank = ConfigLoader.getJumpBoostItemRequirement();
+            EGlowRank = Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.EGlow.RequireRank"));
+        });
     }
 
     public static Rank getEglowRank() { return EGlowRank; }
@@ -83,7 +86,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(FlyItemLore, "<status>", SQLManager.getPlayer(player).getFlyString(),true)
                                     ,"<require>", Rank.getRankNameColorize(FlyItemRank), true))).setStringNBT("PlayerOptionID", "Fly")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getJoinMessageItem(Player player,Boolean glowing) {
@@ -98,7 +101,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(JoinMessageLore, "<status>", SQLManager.getPlayer(player).getJoinMessageString(),true)
                                     ,"<require>", Rank.getRankNameColorize(JoinMessageRank), true)).setStringNBT("PlayerOptionID", "JoinMessage")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getJoinFireworkItem(Player player,Boolean glowing) {
@@ -113,7 +116,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(JoinFireworkLore, "<status>", SQLManager.getPlayer(player).getJoinFireworkString(),true)
                                     ,"<require>", Rank.getRankNameColorize(JoinFireworkRank), true)).setStringNBT("PlayerOptionID", "JoinFirework")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getVanishItem(Player player,Boolean glowing) {
@@ -128,7 +131,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(VanishLore, "<status>", SQLManager.getPlayer(player).getVanishString(),true)
                                     ,"<require>", Rank.getRankNameColorize(VanishRank), true)).setStringNBT("PlayerOptionID", "Vanish")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getHidePlayer(Player player,Boolean glowing) {
@@ -137,13 +140,13 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(HidePlayerLore, "<status>", SQLManager.getPlayer(player).getHidePlayerString(),true)
                                     ,"<require>", Rank.getRankNameColorize(HidePlayerRank), true)).setStringNBT("PlayerOptionID", "HidePlayer")
-                    .setGlowing(true).build();
+                    .setGlowing(false).setGlowing(true).build();
         } else {
             return HidePlayerOff.setLoreByArray(DevLobby.getInstance()
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(HidePlayerLore, "<status>", SQLManager.getPlayer(player).getHidePlayerString(),true)
                                     ,"<require>", Rank.getRankNameColorize(HidePlayerRank), true)).setStringNBT("PlayerOptionID", "HidePlayer")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getSpeedBoostItem(Player player,Boolean glowing) {
@@ -158,7 +161,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(SpeedBoostLore, "<status>", SQLManager.getPlayer(player).getSpeedBoostString(),true)
                                     ,"<require>", Rank.getRankNameColorize(SpeedBoostRank), true)).setStringNBT("PlayerOptionID", "SpeedBoost")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
     public static ItemStack getJumpBoostItem(Player player,Boolean glowing) {
@@ -173,7 +176,7 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(JumpBoostLore, "<status>", SQLManager.getPlayer(player).getJumpBoostString(),true)
                                     ,"<require>", Rank.getRankNameColorize(JumpBoostRank), true)).setStringNBT("PlayerOptionID", "JumpBoost")
-                    .build();
+                    .setGlowing(false).build();
         }
     }
 

@@ -5,6 +5,7 @@ import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
 import com.teenkung.devlobby.Handlers.*;
 import com.teenkung.devlobby.Utils.ItemBuilderTemplate;
 import com.teenkung.devlobby.Utils.LobbyDatabase;
+import de.myzelyam.supervanish.SuperVanish;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;

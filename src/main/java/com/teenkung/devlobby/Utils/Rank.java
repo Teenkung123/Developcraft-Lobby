@@ -61,6 +61,9 @@ public enum Rank {
     }
 
     public static String getRankNameColorize(Rank rank) {
+        if (rank == null) {
+            return colorize("&7Unknown");
+        }
         if (rank.equals(DEFAULT)) {
             return colorize("&7Rookie");
         } else if (rank.equals(GUARDIAN) || rank.equals(GUARDIANF)) {
