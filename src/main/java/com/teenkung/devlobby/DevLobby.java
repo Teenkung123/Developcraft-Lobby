@@ -1,17 +1,23 @@
 package com.teenkung.devlobby;
 
-import com.teenkung.devlobby.Handlers.ChatHandler;
+import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionEventHandler;
+import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
+import com.teenkung.devlobby.Handlers.*;
+import com.teenkung.devlobby.Utils.ItemBuilderTemplate;
 import com.teenkung.devlobby.Utils.LobbyDatabase;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,9 +34,9 @@ public final class DevLobby extends JavaPlugin {
 
     //This defines all Vault API Thing please don't touch
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static Economy econ = null;
-    private static Permission perms = null;
-    private static Chat chat = null;
+    private static Economy econ;
+    private static Permission perms;
+    private static Chat chat;
 
 
     //This Method will call when Server start (Plugin Load)
@@ -57,13 +63,22 @@ public final class DevLobby extends JavaPlugin {
         database = new LobbyDatabase();
         try {
             database.Connect();
+            database.createTable();
             connection = database.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        PlayerOptionItemBuilder.updateItemBuilder();
+        ItemBuilderTemplate.loadTemplate();
+
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ChatHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new QuitHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new FoodHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new DamageHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerOptionEventHandler(), this);
 
     }
 
@@ -94,6 +109,14 @@ public final class DevLobby extends JavaPlugin {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
+    public static ArrayList<String> colorizeArray(ArrayList<String> array) {
+        ArrayList<String> result = new ArrayList<>();
+        for (String str : array) {
+            result.add(colorize(str));
+        }
+        return result;
+    }
+
 
     //ALL BELOW THIS LINE IS VAULT THING PLEASE DON'T TOUCH
 
@@ -103,6 +126,7 @@ public final class DevLobby extends JavaPlugin {
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
+            econ = null;
             return false;
         }
         econ = rsp.getProvider();
@@ -111,16 +135,20 @@ public final class DevLobby extends JavaPlugin {
 
     private void setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        if (rsp == null) { return; }
+        if (rsp == null) { chat = null; return; }
         chat = rsp.getProvider();
     }
 
     private void setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        if (rsp == null) { return; }
+        if (rsp == null) { perms = null; return; }
         perms = rsp.getProvider();
     }
 
+    @SuppressWarnings("NullableProblems")
+    public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
+            return false;
+    }
 
     public static Economy getEconomy() {
         return econ;
@@ -132,5 +160,25 @@ public final class DevLobby extends JavaPlugin {
 
     public static Chat getChat() {
         return chat;
+    }
+
+    //Ends of vault section
+
+    public ArrayList<String> replaceAllinArray(ArrayList<String> input, String regex, String replacement, Boolean colorize) {
+        ArrayList<String> ret = new ArrayList<>();
+        for (String str : input) {
+            str = str.replaceAll(regex, replacement);
+            if (colorize) {str = colorize(str);}
+            ret.add(str);
+        }
+        return ret;
+    }
+
+    public static String replaceAll(String input, String regex, String replacement, Boolean colorize) {
+        if (colorize) {
+            return colorize(input.replaceAll(regex, replacement));
+        } else {
+            return input.replaceAll(regex, replacement);
+        }
     }
 }

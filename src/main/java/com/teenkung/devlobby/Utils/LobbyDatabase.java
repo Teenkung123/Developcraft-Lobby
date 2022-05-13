@@ -1,7 +1,5 @@
 package com.teenkung.devlobby.Utils;
 
-import com.teenkung.devlobby.DevLobby;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -38,8 +36,8 @@ public class LobbyDatabase {
     public void createTable() {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXIST LobbyPlayerData (" +
-                    "ID int NOT null AUTO_INCREMENT, " +
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS LobbyPlayerData (" +
+                    "ID int NOT NULL AUTO_INCREMENT, " +
                     "UUID VARCHAR(40)," +
                     "FLY BOOLEAN, " +
                     "JoinMessage BOOLEAN," +
@@ -48,7 +46,9 @@ public class LobbyDatabase {
                     "HidePlayer BOOLEAN," +
                     "SpeedBoost BOOLEAN," +
                     "JumpBoost BOOLEAN," +
+                    "PRIMARY KEY (ID)" +
                     ");");
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

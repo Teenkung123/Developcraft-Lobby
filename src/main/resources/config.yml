@@ -1,15 +1,120 @@
 Database:
   Host: localhost
-  Port: 3310
+  Port: 3306
   Username: root
   Password: minecraft
   Database: minigame
 
-Module:
-  Lobby-Selector: true
-  Player-Options: true
-  Rank-Upgrade: true
-  PVP: true
+Language:
+  JoinMessages:
+    Guardian: '&c>&6>&e> <rank> &6<name> &eได้เข้าสู่เซิร์ฟเวอร์แล้ว! &e<&6<&c<'
+    Hero: '&5>&d>&f> <rank> &5<name> &dได้เข้าสู้เซิร์ฟเวอร์แล้ว! &f<&d<&5<'
+    Titan: '&1>&3>&b> <rank> &3<name> &bได้เข้าสู่เซิร์ฟเวอร์แล้ว &b<&3<&1<'
+    Dragon: '&2>&a>&f> <rank> &2<name> &bได้เข้าสู่เซิร์ฟเวอร์แล้ว &f<&a<&2<'
+    Supreme: '&4>&c>&f> <rank> &4<name> &cได้เข้าสู่เซิร์ฟเวอร์แล้ว &f<&c<&4<'
+    Youtuber: '&4>&f>&4> <rank> &4<name> &fได้เข้าสู่เซิร์ฟเวอร์แล้ว &4<&f<&4<'
+    Admin: '&0>&4>&6> <rank> &4<name> &6ได้เข้าสู่เซิร์ฟเวอร์แล้ว &6<&4<&0<'
+  Fly:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: GUARDIAN
+    Name: '&fFly Mode'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Fly Mode เมื่อเปิดใช้งานแล้วสามารถบินได้'
+      - '&8Can turn on and off, When turn on you can fly.'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> or &chigher.'
+  JoinMessage:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: GUARDIAN
+    Name: '&fJoin Message'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Join Message เมื่อเปิดแล้วจะแสดงข้อความเวลาเข้ามินิเกมส์นี้'
+      - '&8Can turn on and off, When turn on will show join message when enter this Minigame'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
+  JoinFirework:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: GUARDIAN
+    Name: '&fJoin Firework'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Fly Mode เมื่อเปิดใช้งานแล้วจะมีพลุจุดขึ้นมา 5 ดอกทุกครั้งที่เข้าสู่มินิเกมส์นี้'
+      - '&8Can turn on and off, When turn on will fire 5 firework everytime you join the server'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
+  Vanish:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: YOUTUBER
+    Name: '&fVanish'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Fly Mode เมื่อเปิดใช้งานแล้วผู้เล่นอื่นจะมองไม่เห็นตัวคุณ.'
+      - '&8Can turn on and off, When turn on other players will cannot see you.'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
+  HidePlayer:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: ROOKIE
+    Name: '&fHide Player'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Fly Mode เมื่อเปิดใช้งานแล้วคุณจะไม่สามารถมองเห็นผู้เล่นอื่นได้ (ลด lag ได้)'
+      - '&8Can turn on and off, When turn on you will cannot see another player (can reduce lag).'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
+  SpeedBoost:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: TITAN
+    Name: '&fSpeed Boost'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Fly Mode เมื่อเปิดใช้งานแล้วตัวผู้เล่นจะมีสถานะ Speed 5'
+      - '&8Can turn on and off, When turn on you will have Speed V effect.'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> or &chigher.'
+  JumpBoost:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: TITAN
+    Name: '&fJump Boost'
+    Lore:
+      - '&7เปิดและปิดใช้งาน Jump Boost เมื่อเปิดใช้งานแล้วตัวผู้เล่นจะมีสถานะ Jump Boost 5'
+      - '&8Can turn on and off, When turn on you will have Jump Boost V effect.'
+      - ''
+      - '&7สถานะ: <status>'
+      - '&8Status: <status>'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
+  EGlow:
+    # Available RequireRank: ROOKIE , GUARDIAN , GUARDIANF , HERO , TITAN , DRAGON , SUPREME , YOUTUBER , ADMIN
+    RequireRank: DRAGON
+    Name: '&ePlayer Glow'
+    Lore:
+      - '&7สามารถปรับเปลี่ยนได้ สามารถทำให้ผู้เล่นเรืองแสงเป็นสีต่างๆ ได้'
+      - '&8Customizable, can make player glowing in diffrent colors.'
+      - ''
+      - '&cต้องการยศ <require> &cหรือสูงกว่า'
+      - '&cRequire Rank <require> &cor higher.'
 
 Settings:
   Topup-Multipier: 1.0

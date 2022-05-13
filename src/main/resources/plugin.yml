@@ -6,3 +6,10 @@ prefix: DevLobby
 authors: [ Teenkung123 ]
 description: Lobby plugin for Developcraft network
 website: http://mc-developcraft.net
+softdepend:
+  - WorldGuard
+  - Vault
+  - eGlow
+  - GadgetsMenu
+  - PlaceholderAPI
+  - NBTAPI
