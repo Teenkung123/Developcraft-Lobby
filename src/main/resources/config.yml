@@ -119,4 +119,44 @@ Language:
 Settings:
   Topup-Multipier: 1.0
 
-
+LobbySelector:
+  GUI:
+    Name: Lobby Selector
+    Click-Sound:
+      Sound: a
+      Pitch: a
+      Volume: a
+    Open-Sound:
+      Sound: a
+      Pitch: a
+      Volume: a
+    Layout:
+      - BBBBBBBBB
+      - BWWWWWWWB
+      - BWWWWWWWB
+      - BWWWWWWWB
+      - BWWWWWWWB
+      - BBBBBBBBB
+    Items:
+      B:
+        Item: BLACK_STAINED_GLASS_PANE
+        Name: ""
+      W:
+        Item: WHITE_STAINED_GLASS_PANE
+        Name: ""
+  Lores:
+    Version: '&cGame Version: &f<version>'
+    Status: '&8► &fสถานะเซิร์ฟเวอร์: &a<status>'
+    Online: '&8► &fผู้เล่นออนไลน์: &a<online> &f/ &a<max> &fคน'
+    Offline: '&8► &cไม่สามารถเข้าเซิร์ฟเวอร์นี้ได้ชั่วคราว เนื่องจากเซิร์ฟเวอร์ Offline'
+  Items:
+    test:
+      Item: STONE
+      Name: "Test Item"
+      Lore:
+        - test1
+        - test2
+      Slot: 10
+      Glowing: true
+      Version: '1.20.2'
+      Connect: mainlobby

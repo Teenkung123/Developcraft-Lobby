@@ -11,7 +11,7 @@ public class LobbyDatabase {
 
     public void Connect() throws SQLException {
         connection = DriverManager.getConnection(
-                "jdbc:mysql://" + ConfigLoader.getDatabaseHost() + ":" + ConfigLoader.getDatabasePort() + "/" + ConfigLoader.getDatabaseName() + "?useSSL=false",
+                "jdbc:mysql://" + ConfigLoader.getDatabaseHost() + ":" + ConfigLoader.getDatabasePort() + "/" + ConfigLoader.getDatabaseName() + "?useSSL=false&autoReconnect=true",
                 ConfigLoader.getDatabaseUser(),
                 ConfigLoader.getDatabasePassword()
         );

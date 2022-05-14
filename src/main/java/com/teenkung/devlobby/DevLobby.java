@@ -1,11 +1,12 @@
 package com.teenkung.devlobby;
 
+import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
+import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUIHandler;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionEventHandler;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
 import com.teenkung.devlobby.Handlers.*;
 import com.teenkung.devlobby.Utils.ItemBuilderTemplate;
 import com.teenkung.devlobby.Utils.LobbyDatabase;
-import de.myzelyam.supervanish.SuperVanish;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -31,7 +32,6 @@ public final class DevLobby extends JavaPlugin {
     private static DevLobby Instance;
 
     private static Connection connection;
-    private static LobbyDatabase database;
 
     //This defines all Vault API Thing please don't touch
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -61,7 +61,7 @@ public final class DevLobby extends JavaPlugin {
         saveDefaultConfig();
 
         //Connect to database
-        database = new LobbyDatabase();
+        LobbyDatabase database = new LobbyDatabase();
         try {
             database.Connect();
             database.createTable();
@@ -72,6 +72,7 @@ public final class DevLobby extends JavaPlugin {
 
         PlayerOptionItemBuilder.updateItemBuilder();
         ItemBuilderTemplate.loadTemplate();
+        LobbySelectorGUI.createLobbySelectorGUI();
 
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ChatHandler(), this);
@@ -80,6 +81,7 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new FoodHandler(), this);
         Bukkit.getPluginManager().registerEvents(new DamageHandler(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerOptionEventHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new LobbySelectorGUIHandler(), this);
 
     }
 
@@ -93,7 +95,6 @@ public final class DevLobby extends JavaPlugin {
     //This method is for getting this class's Instance from another class
     public static DevLobby getInstance() { return Instance; }
     public static Connection getConnection() { return connection; }
-    public static LobbyDatabase getDatabase() { return database; }
 
     public static String colorize(String s) {
         if (s == null || s.equals(""))

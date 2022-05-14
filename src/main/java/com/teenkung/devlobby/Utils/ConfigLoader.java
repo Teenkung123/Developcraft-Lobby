@@ -1,10 +1,15 @@
 package com.teenkung.devlobby.Utils;
 
 import com.teenkung.devlobby.DevLobby;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
+import static com.teenkung.devlobby.DevLobby.colorize;
 
 public class ConfigLoader {
 
@@ -61,5 +66,65 @@ public class ConfigLoader {
     public static Rank getJumpBoostItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JumpBoost.RequireRank")); }
     public static String getJumpBoostItemName() { return DevLobby.getInstance().getConfig().getString("Language.JumpBoost.Name"); }
     public static ArrayList<String> getJumpBoostItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JumpBoost.Lore")); }
+
+    //Lobby Selector GUI Thing
+
+    public static ArrayList<ArrayList<String>> getLobbySelectorGUILayout() {
+        ArrayList<ArrayList<String>> segment1 = new ArrayList<>();
+        ArrayList<String> layout = new ArrayList<>(getConfig().getStringList("LobbySelector.GUI.Layout"));
+        for (String key : layout) {
+            ArrayList<String> segment2 = new ArrayList<>();
+            for (int i = 0 ; i < 9 ; i++) {
+                if (key.length()-1 < i) {
+                    segment2.add("");
+                } else {
+                    segment2.add(String.valueOf(key.charAt(i)));
+                }
+            }
+            //ArrayList<String> segment2 = new ArrayList<>(Arrays.asList(key.split("", 9)));
+            segment1.add(segment2);
+            segment2.clear();
+        }
+        return segment1;
+    }
+
+    public static ArrayList<String> getLobbySelectorGUIKeys() {
+        ConfigurationSection config = getConfig().getConfigurationSection("LobbySelector.GUI.Items");
+        if (config == null) { return new ArrayList<>(); }
+        return new ArrayList<>(config.getKeys(false));
+    }
+
+    public static HashMap<String, ItemStack> getLobbySelectorGUIItems() {
+        HashMap<String, ItemStack> returns = new HashMap<>();
+        for (String key : getLobbySelectorGUIKeys()) {
+            String matStr = getConfig().getString("LobbySelector.GUI.Items."+key+".Item");
+            if (matStr == null) { matStr = ""; }
+
+            Material mat = Material.getMaterial(matStr);
+            if (mat == null) { mat = Material.AIR; }
+
+            returns.put(key, new ItemBuilder(mat, 1).setDisplayName(colorize(getConfig().getString("LobbySelector.GUI.Items."+key+".Name"))).build());
+        }
+        return returns;
+    }
+
+    public static ArrayList<String> getLobbySelectorItemKeys() {
+        ConfigurationSection config = getConfig().getConfigurationSection("LobbySelector.Items");
+        if (config == null) { return new ArrayList<>(); }
+        return new ArrayList<>(config.getKeys(false));
+    }
+
+    public static HashMap<String, ItemBuilder> getLobbySelectorItemBuilder() {
+        HashMap<String, ItemBuilder> returns = new HashMap<>();
+        for (String key : getLobbySelectorItemKeys()) {
+            Material mat = Material.getMaterial(getConfig().getString("LobbySelector.Items."+key+".Item", "STONE"));
+            returns.put(key, new ItemBuilder(mat, 1)
+                    .setDisplayName(getConfig().getString("LobbySelector.Items."+key+".Name", "Not Found"))
+                    .setGlowing(getConfig().getBoolean("LobbySelector.Items."+key+".Glowing"))
+                    .setStringNBT("ConnectTo", getConfig().getString("LobbySelector.Items."+key+"Connect"))
+                    );
+        }
+        return returns;
+    }
 
 }
