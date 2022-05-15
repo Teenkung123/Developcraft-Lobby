@@ -31,7 +31,6 @@ repositories {
         name = 'worldguard'
         url = 'https://maven.enginehub.org/repo/'
     }
-
 }
 
 dependencies {
@@ -40,6 +39,9 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.0'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.4'
+    compileOnly 'com.gitlab.ruany:LiteBansAPI:0.3.5'
+    //compileOnly 'com.github.plan-player-analytics:Plan:5.4.1633'
+    //testCompileOnly 'com.github.plan-player-analytics:Plan:5.4.1633'
     compileOnly fileTree('libs')
 }
 

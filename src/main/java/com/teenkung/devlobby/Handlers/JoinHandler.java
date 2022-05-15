@@ -1,7 +1,6 @@
 package com.teenkung.devlobby.Handlers;
 
 import com.teenkung.devlobby.DevLobby;
-import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionGUI;
 import com.teenkung.devlobby.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -12,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
-
-import static java.util.Collections.replaceAll;
 
 public class JoinHandler implements Listener {
 

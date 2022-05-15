@@ -1,7 +1,10 @@
 package com.teenkung.devlobby;
 
+import com.teenkung.devlobby.Command.DeletePlayerData;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUIHandler;
+import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorLoader;
+import com.teenkung.devlobby.GUIs.LobbySelector.PluginMessage;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionEventHandler;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
 import com.teenkung.devlobby.Handlers.*;
@@ -20,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,9 +74,12 @@ public final class DevLobby extends JavaPlugin {
             e.printStackTrace();
         }
 
+        PluginMessage.registerPluginMessageListener();
         PlayerOptionItemBuilder.updateItemBuilder();
         ItemBuilderTemplate.loadTemplate();
         LobbySelectorGUI.createLobbySelectorGUI();
+        LobbySelectorLoader.setupLobbyItem();
+        LobbySelectorLoader.updateLobbyItem();
 
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ChatHandler(), this);
@@ -82,6 +89,10 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageHandler(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerOptionEventHandler(), this);
         Bukkit.getPluginManager().registerEvents(new LobbySelectorGUIHandler(), this);
+
+        Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, LobbySelectorLoader::updateLobbyItem, 200, 200);
 
     }
 
@@ -151,6 +162,7 @@ public final class DevLobby extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
             return false;
     }
+
 
     public static Economy getEconomy() {
         return econ;

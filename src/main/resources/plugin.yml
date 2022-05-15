@@ -15,3 +15,10 @@ softdepend:
   - NBTAPI
   - SuperVanish
   - HideItem
+  - Plan
+  - LiteBans
+
+commands:
+  delete-player-data:
+    permission: DevLobby.DeletePlayerData
+    description: Delete Player Data and accounts from same ip from plan

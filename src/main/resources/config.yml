@@ -140,10 +140,10 @@ LobbySelector:
     Items:
       B:
         Item: BLACK_STAINED_GLASS_PANE
-        Name: ""
+        Name: " "
       W:
         Item: WHITE_STAINED_GLASS_PANE
-        Name: ""
+        Name: " "
   Lores:
     Version: '&cGame Version: &f<version>'
     Status: '&8► &fสถานะเซิร์ฟเวอร์: &a<status>'
@@ -157,6 +157,7 @@ LobbySelector:
         - test1
         - test2
       Slot: 10
+      IP-Address:
       Glowing: true
       Version: '1.20.2'
       Connect: mainlobby

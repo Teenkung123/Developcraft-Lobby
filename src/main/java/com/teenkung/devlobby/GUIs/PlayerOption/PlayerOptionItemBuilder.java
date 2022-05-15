@@ -140,13 +140,13 @@ public class PlayerOptionItemBuilder {
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(HidePlayerLore, "<status>", SQLManager.getPlayer(player).getHidePlayerString(),true)
                                     ,"<require>", Rank.getRankNameColorize(HidePlayerRank), true)).setStringNBT("PlayerOptionID", "HidePlayer")
-                    .setGlowing(false).setGlowing(true).build();
+                    .setGlowing(false).build();
         } else {
             return HidePlayerOff.setLoreByArray(DevLobby.getInstance()
                             .replaceAllinArray(DevLobby.getInstance()
                                             .replaceAllinArray(HidePlayerLore, "<status>", SQLManager.getPlayer(player).getHidePlayerString(),true)
                                     ,"<require>", Rank.getRankNameColorize(HidePlayerRank), true)).setStringNBT("PlayerOptionID", "HidePlayer")
-                    .setGlowing(false).build();
+                    .setGlowing(true).build();
         }
     }
     public static ItemStack getSpeedBoostItem(Player player,Boolean glowing) {

@@ -8,12 +8,15 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static com.teenkung.devlobby.DevLobby.colorize;
 
 public class ConfigLoader {
 
-    public static FileConfiguration getConfig() { return DevLobby.getInstance().getConfig(); }
+    public static FileConfiguration getConfig() {
+        return DevLobby.getInstance().getConfig();
+    }
 
     public static String getPlayerJoinMessage(Rank rank) {
         if (rank.equals(Rank.GUARDIAN) || rank.equals(Rank.GUARDIANF)) {
@@ -22,50 +25,122 @@ public class ConfigLoader {
             return getConfig().getString("Language.JoinMessages.Hero");
         } else if (rank.equals(Rank.TITAN)) {
             return getConfig().getString("Language.JoinMessages.Titan");
-        }else if (rank.equals(Rank.DRAGON)) {
+        } else if (rank.equals(Rank.DRAGON)) {
             return getConfig().getString("Language.JoinMessages.Dragon");
-        }else if (rank.equals(Rank.SUPREME)) {
+        } else if (rank.equals(Rank.SUPREME)) {
             return getConfig().getString("Language.JoinMessages.Supreme");
-        }else if (rank.equals(Rank.YOUTUBER)) {
+        } else if (rank.equals(Rank.YOUTUBER)) {
             return getConfig().getString("Language.JoinMessages.Youtuber");
-        }else if (rank.equals(Rank.ADMIN)) {
+        } else if (rank.equals(Rank.ADMIN)) {
             return getConfig().getString("Language.JoinMessages.Admin");
-        }else { return ""; }
+        } else {
+            return "";
+        }
     }
 
-    public static String getDatabaseHost() { return DevLobby.getInstance().getConfig().getString("Database.Host"); }
-    public static String getDatabasePort() { return DevLobby.getInstance().getConfig().getString("Database.Port"); }
-    public static String getDatabaseUser() { return DevLobby.getInstance().getConfig().getString("Database.Username"); }
-    public static String getDatabasePassword() { return DevLobby.getInstance().getConfig().getString("Database.Password"); }
-    public static String getDatabaseName() { return DevLobby.getInstance().getConfig().getString("Database.Database"); }
+    public static String getDatabaseHost() {
+        return DevLobby.getInstance().getConfig().getString("Database.Host");
+    }
 
-    public static Rank getFlyItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.Fly.RequireRank", "GUARDIAN")); }
-    public static String getFlyItemName() { return DevLobby.getInstance().getConfig().getString("Language.Fly.Name", "&fFly Mode"); }
-    public static ArrayList<String> getFlyItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.Fly.Lore")); }
+    public static String getDatabasePort() {
+        return DevLobby.getInstance().getConfig().getString("Database.Port");
+    }
 
-    public static Rank getJoinMessageItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JoinMessage.RequireRank")); }
-    public static String getJoinMessageItemName() { return DevLobby.getInstance().getConfig().getString("Language.JoinMessage.Name"); }
-    public static ArrayList<String> getJoinMessageItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JoinMessage.Lore")); }
+    public static String getDatabaseUser() {
+        return DevLobby.getInstance().getConfig().getString("Database.Username");
+    }
 
-    public static Rank getJoinFireworkItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JoinFirework.RequireRank")); }
-    public static String getJoinFireworkItemName() { return DevLobby.getInstance().getConfig().getString("Language.JoinFirework.Name"); }
-    public static ArrayList<String> getJoinFireworkItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JoinFirework.Lore")); }
+    public static String getDatabasePassword() {
+        return DevLobby.getInstance().getConfig().getString("Database.Password");
+    }
 
-    public static Rank getVanishItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.Vanish.RequireRank")); }
-    public static String getVanishItemName() { return DevLobby.getInstance().getConfig().getString("Language.Vanish.Name"); }
-    public static ArrayList<String> getVanishItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.Vanish.Lore")); }
+    public static String getDatabaseName() {
+        return DevLobby.getInstance().getConfig().getString("Database.Database");
+    }
 
-    public static Rank getHidePlayerItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.HidePlayer.RequireRank")); }
-    public static String getHidePlayerItemName() { return DevLobby.getInstance().getConfig().getString("Language.HidePlayer.Name"); }
-    public static ArrayList<String> getHidePlayerItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.HidePlayer.Lore")); }
+    public static Rank getFlyItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.Fly.RequireRank", "GUARDIAN"));
+    }
 
-    public static Rank getSpeedBoostItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.SpeedBoost.RequireRank")); }
-    public static String getSpeedBoostItemName() { return DevLobby.getInstance().getConfig().getString("Language.SpeedBoost.Name"); }
-    public static ArrayList<String> getSpeedBoostItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.SpeedBoost.Lore")); }
+    public static String getFlyItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.Fly.Name", "&fFly Mode");
+    }
 
-    public static Rank getJumpBoostItemRequirement() { return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JumpBoost.RequireRank")); }
-    public static String getJumpBoostItemName() { return DevLobby.getInstance().getConfig().getString("Language.JumpBoost.Name"); }
-    public static ArrayList<String> getJumpBoostItemLore() { return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JumpBoost.Lore")); }
+    public static ArrayList<String> getFlyItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.Fly.Lore"));
+    }
+
+    public static Rank getJoinMessageItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JoinMessage.RequireRank"));
+    }
+
+    public static String getJoinMessageItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.JoinMessage.Name");
+    }
+
+    public static ArrayList<String> getJoinMessageItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JoinMessage.Lore"));
+    }
+
+    public static Rank getJoinFireworkItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JoinFirework.RequireRank"));
+    }
+
+    public static String getJoinFireworkItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.JoinFirework.Name");
+    }
+
+    public static ArrayList<String> getJoinFireworkItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JoinFirework.Lore"));
+    }
+
+    public static Rank getVanishItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.Vanish.RequireRank"));
+    }
+
+    public static String getVanishItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.Vanish.Name");
+    }
+
+    public static ArrayList<String> getVanishItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.Vanish.Lore"));
+    }
+
+    public static Rank getHidePlayerItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.HidePlayer.RequireRank"));
+    }
+
+    public static String getHidePlayerItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.HidePlayer.Name");
+    }
+
+    public static ArrayList<String> getHidePlayerItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.HidePlayer.Lore"));
+    }
+
+    public static Rank getSpeedBoostItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.SpeedBoost.RequireRank"));
+    }
+
+    public static String getSpeedBoostItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.SpeedBoost.Name");
+    }
+
+    public static ArrayList<String> getSpeedBoostItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.SpeedBoost.Lore"));
+    }
+
+    public static Rank getJumpBoostItemRequirement() {
+        return Rank.getRank(DevLobby.getInstance().getConfig().getString("Language.JumpBoost.RequireRank"));
+    }
+
+    public static String getJumpBoostItemName() {
+        return DevLobby.getInstance().getConfig().getString("Language.JumpBoost.Name");
+    }
+
+    public static ArrayList<String> getJumpBoostItemLore() {
+        return new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.JumpBoost.Lore"));
+    }
 
     //Lobby Selector GUI Thing
 
@@ -74,8 +149,8 @@ public class ConfigLoader {
         ArrayList<String> layout = new ArrayList<>(getConfig().getStringList("LobbySelector.GUI.Layout"));
         for (String key : layout) {
             ArrayList<String> segment2 = new ArrayList<>();
-            for (int i = 0 ; i < 9 ; i++) {
-                if (key.length()-1 < i) {
+            for (int i = 0; i < 9; i++) {
+                if (key.length() - 1 < i) {
                     segment2.add("");
                 } else {
                     segment2.add(String.valueOf(key.charAt(i)));
@@ -83,48 +158,38 @@ public class ConfigLoader {
             }
             //ArrayList<String> segment2 = new ArrayList<>(Arrays.asList(key.split("", 9)));
             segment1.add(segment2);
-            segment2.clear();
         }
         return segment1;
     }
 
     public static ArrayList<String> getLobbySelectorGUIKeys() {
         ConfigurationSection config = getConfig().getConfigurationSection("LobbySelector.GUI.Items");
-        if (config == null) { return new ArrayList<>(); }
+        if (config == null) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>(config.getKeys(false));
     }
 
     public static HashMap<String, ItemStack> getLobbySelectorGUIItems() {
         HashMap<String, ItemStack> returns = new HashMap<>();
         for (String key : getLobbySelectorGUIKeys()) {
-            String matStr = getConfig().getString("LobbySelector.GUI.Items."+key+".Item");
-            if (matStr == null) { matStr = ""; }
+            String matStr = getConfig().getString("LobbySelector.GUI.Items." + key + ".Item");
+            if (matStr == null) {
+                matStr = "";
+            }
 
             Material mat = Material.getMaterial(matStr);
-            if (mat == null) { mat = Material.AIR; }
+            if (mat == null) {
+                mat = Material.AIR;
+            }
 
-            returns.put(key, new ItemBuilder(mat, 1).setDisplayName(colorize(getConfig().getString("LobbySelector.GUI.Items."+key+".Name"))).build());
+            returns.put(key, new ItemBuilder(mat, 1).setDisplayName(colorize(getConfig().getString("LobbySelector.GUI.Items." + key + ".Name"))).build());
         }
         return returns;
     }
 
-    public static ArrayList<String> getLobbySelectorItemKeys() {
-        ConfigurationSection config = getConfig().getConfigurationSection("LobbySelector.Items");
-        if (config == null) { return new ArrayList<>(); }
-        return new ArrayList<>(config.getKeys(false));
+    public static Material getMaterial(String material) {
+        Material mat = Material.getMaterial(material);
+        return Objects.requireNonNullElse(mat, Material.AIR);
     }
-
-    public static HashMap<String, ItemBuilder> getLobbySelectorItemBuilder() {
-        HashMap<String, ItemBuilder> returns = new HashMap<>();
-        for (String key : getLobbySelectorItemKeys()) {
-            Material mat = Material.getMaterial(getConfig().getString("LobbySelector.Items."+key+".Item", "STONE"));
-            returns.put(key, new ItemBuilder(mat, 1)
-                    .setDisplayName(getConfig().getString("LobbySelector.Items."+key+".Name", "Not Found"))
-                    .setGlowing(getConfig().getBoolean("LobbySelector.Items."+key+".Glowing"))
-                    .setStringNBT("ConnectTo", getConfig().getString("LobbySelector.Items."+key+"Connect"))
-                    );
-        }
-        return returns;
-    }
-
 }
