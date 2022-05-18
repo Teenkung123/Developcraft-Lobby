@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -22,6 +21,7 @@ public class LobbySelectorGUIHandler implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (ItemBuilderTemplate.getLobbySelector().equals(event.getPlayer().getInventory().getItemInMainHand())) {
             if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                event.getPlayer().playSound(event.getPlayer().getLocation(), LobbySelectorLoader.getOpenSound(), LobbySelectorLoader.getOpenSoundVolume(), LobbySelectorLoader.getOpenSoundPitch());
                 event.getPlayer().openInventory(LobbySelectorGUI.getInventory());
             }
         }
@@ -35,6 +35,7 @@ public class LobbySelectorGUIHandler implements Listener {
                 String key = new ItemBuilder(event.getCurrentItem()).getStringNBT("ItemID");
                 if (LobbySelectorLoader.getLobbyKeys().contains(key)) {
                     sendPlayerToServer((Player) event.getWhoClicked(), LobbySelectorLoader.getConnectTo(key));
+                    ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), LobbySelectorLoader.getClickSound(), LobbySelectorLoader.getClockSoundVolume(), LobbySelectorLoader.getClickSoundPitch());
                     event.getWhoClicked().closeInventory();
 
                 }
@@ -50,7 +51,6 @@ public class LobbySelectorGUIHandler implements Listener {
             out.writeUTF(server);
         } catch (Exception e) {
             player.sendMessage(colorize("Error while trying to connect to target server!"));
-            //player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6Celmic Network&8] &fThere was an problem connecting to " + server + "!"));
             return;
         }
 

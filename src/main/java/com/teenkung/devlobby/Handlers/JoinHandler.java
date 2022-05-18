@@ -37,6 +37,7 @@ public class JoinHandler implements Listener {
 
     private void setSlot(Player player) {
         player.getInventory().setItem(0, ItemBuilderTemplate.getLobbySelector());
+        player.getInventory().setItem(1, ItemBuilderTemplate.getRankShopItem());
         player.getInventory().setItem(8, ItemBuilderTemplate.getPlayerOption());
     }
 

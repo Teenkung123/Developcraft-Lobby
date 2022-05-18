@@ -190,6 +190,6 @@ public class ConfigLoader {
 
     public static Material getMaterial(String material) {
         Material mat = Material.getMaterial(material);
-        return Objects.requireNonNullElse(mat, Material.AIR);
+        return Objects.requireNonNullElse(mat, Material.STONE);
     }
 }

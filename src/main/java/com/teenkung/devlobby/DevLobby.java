@@ -1,6 +1,7 @@
 package com.teenkung.devlobby;
 
 import com.teenkung.devlobby.Command.DeletePlayerData;
+import com.teenkung.devlobby.GUIs.BuyRank.BuyRankHandler;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUIHandler;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorLoader;
@@ -74,6 +75,7 @@ public final class DevLobby extends JavaPlugin {
             e.printStackTrace();
         }
 
+        JumpPadHandler.setPressurePlateBlock();
         PluginMessage.registerPluginMessageListener();
         PlayerOptionItemBuilder.updateItemBuilder();
         ItemBuilderTemplate.loadTemplate();
@@ -89,6 +91,8 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageHandler(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerOptionEventHandler(), this);
         Bukkit.getPluginManager().registerEvents(new LobbySelectorGUIHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new JumpPadHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new BuyRankHandler(), this);
 
         Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
 
@@ -107,7 +111,24 @@ public final class DevLobby extends JavaPlugin {
     public static DevLobby getInstance() { return Instance; }
     public static Connection getConnection() { return connection; }
 
-    public static String colorize(String s) {
+    public static String colorize(String message) {
+        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+        Matcher matcher = pattern.matcher(message);
+        while (matcher.find()) {
+            String hexCode = message.substring(matcher.start(), matcher.end());
+            String replaceSharp = hexCode.replace('#', 'x');
+
+            char[] ch = replaceSharp.toCharArray();
+            StringBuilder builder = new StringBuilder();
+            for (char c : ch) {
+                builder.append("&").append(c);
+            }
+
+            message = message.replace(hexCode, builder.toString());
+            matcher = pattern.matcher(message);
+        }
+        return ChatColor.translateAlternateColorCodes('&', message);
+        /*old code
         if (s == null || s.equals(""))
             return "";
         if (!Bukkit.getVersion().contains("1.16") && !Bukkit.getVersion().contains("1.17"))
@@ -119,7 +140,7 @@ public final class DevLobby extends JavaPlugin {
             s = s.replace(hexColor, ChatColor.valueOf(hexColor).toString());
             match = pattern.matcher(s);
         }
-        return ChatColor.translateAlternateColorCodes('&', s);
+        return ChatColor.translateAlternateColorCodes('&', s);*/
     }
 
     public static ArrayList<String> colorizeArray(ArrayList<String> array) {

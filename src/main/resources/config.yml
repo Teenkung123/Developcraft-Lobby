@@ -5,6 +5,10 @@ Database:
   Password: minecraft
   Database: minigame
 
+JumpPad:
+  Block: HEAVY_WEIGHTED_PRESSURE_PLATE
+  Power: 4
+
 Language:
   JoinMessages:
     Guardian: '&c>&6>&e> <rank> &6<name> &eได้เข้าสู่เซิร์ฟเวอร์แล้ว! &e<&6<&c<'
@@ -116,20 +120,59 @@ Language:
       - '&cต้องการยศ <require> &cหรือสูงกว่า'
       - '&cRequire Rank <require> &cor higher.'
 
-Settings:
-  Topup-Multipier: 1.0
+BuyRank:
+  Topup-Multiplier: 1.0
+  Not-Enough-Money: '&cคุณมีเงินไม่เพียงพอ'
+  Enough-Money: '&aคุณมีเงินเพียงพอ ต้องการอีก <require>'
+  Require-Previous: '&cคุณต้องมียศ <rank> &cก่อนจึงจะซื้อได้'
+  Already-Own: '&aมีในครอบครองแล้ว'
+  Not-Own-Yet: '&cยังไม่มีในครอบครอง'
+  Buyable: '&7ราคา &e<price> Coins'
+  UnBuyable: '&7สามารถซื้อได้ผ่าน &eWebshop &7เซิร์ฟเวอร์!'
+  Estimate-Money: '&7รคาโดยประมาณ: <bath> บาท &8(เติมเงินคูณ <multiplier>)'
+
+  Guardian:
+    Buyable: true
+    Bath:
+    Price: 15000
+    Description:
+      - ''
+  Hero:
+    Buyable: true
+    Bath:
+    price: 50000
+    Description:
+      - ''
+  Titan:
+    Buyable: false
+    Bath:
+    Price: 1000000000
+    Description:
+      - ''
+  Dragon:
+    Buyable: false
+    Bath:
+    Price: 1000000000
+    Description:
+      - ''
+  Supreme:
+    Buyable: false
+    Bath:
+    Price: 1000000000
+    Description:
+      - ''
 
 LobbySelector:
   GUI:
     Name: Lobby Selector
     Click-Sound:
-      Sound: a
-      Pitch: a
-      Volume: a
+      Sound: BLOCK_DISPENSER_DISPENSE
+      Pitch: 1
+      Volume: 1s
     Open-Sound:
-      Sound: a
-      Pitch: a
-      Volume: a
+      Sound: BLOCK_CHES_OPEN
+      Pitch: 1
+      Volume: 1
     Layout:
       - BBBBBBBBB
       - BWWWWWWWB

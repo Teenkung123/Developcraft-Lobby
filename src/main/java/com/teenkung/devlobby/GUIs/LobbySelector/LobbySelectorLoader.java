@@ -5,6 +5,7 @@ import com.teenkung.devlobby.Utils.ConfigLoader;
 import com.teenkung.devlobby.Utils.ItemBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import static com.teenkung.devlobby.DevLobby.colorize;
 public class LobbySelectorLoader {
 
     private static final HashMap<String, ItemBuilder> LobbyItem = new HashMap<>();
-    //private static HashMap<String, ItemStack> LobbyOutputItem = new HashMap<>();
     private static final HashMap<String, String> LobbyConnect = new HashMap<>();
     private static final HashMap<String, String> LobbyVersion = new HashMap<>();
     private static final HashMap<String, String> LobbyIP = new HashMap<>();
@@ -23,10 +23,36 @@ public class LobbySelectorLoader {
     private static final HashMap<String, Integer> LobbySlot = new HashMap<>();
     private static ArrayList<String> LobbyKeys = new ArrayList<>();
 
+    private static Sound ClickSound;
+    private static Sound OpenSound;
+    private static Float ClickSoundVolume;
+    private static Float OpenSoundVolume;
+    private static Float ClickSoundPitch;
+    private static Float OpenSoundPitch;
+
     public static ArrayList<String> getLobbyKeys() { return LobbyKeys; }
     public static String getConnectTo(String key) { return LobbyConnect.get(key); }
 
+    public static Sound getClickSound() { return ClickSound; }
+    public static Sound getOpenSound() { return OpenSound; }
+
+    public static Float getClockSoundVolume() { return ClickSoundVolume; }
+    public static Float getOpenSoundVolume() { return OpenSoundVolume; }
+
+    public static Float getClickSoundPitch() { return ClickSoundPitch; }
+    public static Float getOpenSoundPitch() { return OpenSoundPitch; }
+
     public static void setupLobbyItem() {
+
+        ClickSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Click-Sound.Sound", "BLOCK_DISPENSER_DISPENSE"));
+        OpenSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Open-Sound.Sound", "BLOCK_CHES_OPEN"));
+
+        ClickSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Volume", 1)).floatValue();
+        OpenSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Volume", 1)).floatValue();
+
+        ClickSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Pitch", 1)).floatValue();
+        OpenSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Pitch", 1)).floatValue();
+
         ConfigurationSection section = DevLobby.getInstance().getConfig().getConfigurationSection("LobbySelector.Items");
         if (section != null) {
             LobbyKeys = new ArrayList<>(section.getKeys(false));
@@ -68,7 +94,7 @@ public class LobbySelectorLoader {
             } else {
                 lore.add(onlineLore.replace("<max>", plrMax).replace("<online>", plrOnline));
             }
-            LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).build());
+            LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(Integer.parseInt(ChatColor.stripColor(plrOnline))).build());
             lore.clear();
         }
     }

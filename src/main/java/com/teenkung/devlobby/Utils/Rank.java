@@ -1,5 +1,8 @@
 package com.teenkung.devlobby.Utils;
 
+import com.teenkung.devlobby.DevLobby;
+import org.bukkit.entity.Player;
+
 import javax.annotation.Nullable;
 
 import static com.teenkung.devlobby.DevLobby.colorize;
@@ -7,6 +10,8 @@ import static com.teenkung.devlobby.DevLobby.colorize;
 public enum Rank {
 
     DEFAULT,GUARDIAN,GUARDIANF,HERO,TITAN,DRAGON,SUPREME,YOUTUBER,ADMIN,UNKNOWN;
+
+    private static Rank PlayerRank;
 
     public static String getString(Rank rank) {
         if (rank.equals(DEFAULT)) {
@@ -27,6 +32,31 @@ public enum Rank {
             return colorize("ADMIN");
         } else {
             return colorize("Rookie");
+        }
+    }
+
+    public static Rank getFromPlayer(Player player) {
+        PlayerRank = getRank(DevLobby.getChat().getPrimaryGroup(player));
+        return PlayerRank;
+    }
+
+    public static Rank getLowerRank(Rank rank) {
+        if (rank.equals(DEFAULT) || rank.equals(GUARDIAN)) {
+            return DEFAULT;
+        } else if (rank.equals(HERO)) {
+            return GUARDIAN;
+        } else if (rank.equals(TITAN)) {
+            return HERO;
+        } else if (rank.equals(DRAGON)) {
+            return TITAN;
+        } else if (rank.equals(SUPREME)) {
+            return DRAGON;
+        } else if (rank.equals(GUARDIANF)) {
+            return GUARDIANF;
+        } else if (rank.equals(ADMIN)) {
+            return ADMIN;
+        } else {
+            return UNKNOWN;
         }
     }
 
@@ -56,8 +86,8 @@ public enum Rank {
         }
     }
 
-    public static Boolean isHigherOrEqual(Rank input1, Rank input2) {
-        return getRankPriority(input1) >= getRankPriority(input2);
+    public Boolean isHigherOrEqual(Rank rank) {
+        return getRankPriority(PlayerRank) >= getRankPriority(rank);
     }
 
     public static String getRankNameColorize(Rank rank) {

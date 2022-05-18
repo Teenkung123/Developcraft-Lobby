@@ -19,7 +19,6 @@ public class LobbySelectorGUI {
         ArrayList<ArrayList<String>> layout = ConfigLoader.getLobbySelectorGUILayout();
         HashMap<String, ItemStack> keyItems = ConfigLoader.getLobbySelectorGUIItems();
         InventoryName = ConfigLoader.getConfig().getString("LobbySelector.GUI.Name");
-        Bukkit.broadcastMessage(layout.get(1).size() + " " + layout.size());
         LobbySelectorInventory = Bukkit.createInventory(null, 54, colorize(InventoryName));
         ArrayList<String> joined = new ArrayList<>();
         for (ArrayList<String> lay : layout) {
