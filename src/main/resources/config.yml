@@ -122,14 +122,14 @@ Language:
 
 BuyRank:
   Topup-Multiplier: 1.0
-  Not-Enough-Money: '&cคุณมีเงินไม่เพียงพอ'
-  Enough-Money: '&aคุณมีเงินเพียงพอ ต้องการอีก <require>'
+  Not-Enough-Money: '&cคุณมีเงินไม่เพียงพอ ต้องการอีก <require>'
+  Enough-Money: '&aคุณมีเงินเพียงพอ'
   Require-Previous: '&cคุณต้องมียศ <rank> &cก่อนจึงจะซื้อได้'
   Already-Own: '&aมีในครอบครองแล้ว'
-  Not-Own-Yet: '&cยังไม่มีในครอบครอง'
-  Buyable: '&7ราคา &e<price> Coins'
+  Not-Owned-Yet: '&cยังไม่มีในครอบครอง'
+  Buyable: '&7หรือซื้อได้ในราคา &e<price> Coins'
   UnBuyable: '&7สามารถซื้อได้ผ่าน &eWebshop &7เซิร์ฟเวอร์!'
-  Estimate-Money: '&7รคาโดยประมาณ: <bath> บาท &8(เติมเงินคูณ <multiplier>)'
+  Estimate-Money: '&7ราคาโดยประมาณ: <bath> บาท &8(เติมเงินคูณ <multiplier>)'
 
   Guardian:
     Buyable: true
@@ -170,7 +170,7 @@ LobbySelector:
       Pitch: 1
       Volume: 1s
     Open-Sound:
-      Sound: BLOCK_CHES_OPEN
+      Sound: BLOCK_CHEST_OPEN
       Pitch: 1
       Volume: 1
     Layout:

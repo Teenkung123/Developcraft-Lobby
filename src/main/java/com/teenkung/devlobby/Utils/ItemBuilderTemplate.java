@@ -2,6 +2,7 @@ package com.teenkung.devlobby.Utils;
 
 import com.teenkung.devlobby.DevLobby;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,10 +18,12 @@ public class ItemBuilderTemplate {
     private static ItemStack BuyRank;
 
     public static void loadTemplate() {
-        LobbySelector = new ItemBuilder(Material.CLOCK, 1).setDisplayName(colorize("&eLobby Selector &b(Right Click)")).build();
-        PlayerOption = new ItemBuilder(Material.BOOK, 1).setDisplayName(colorize("&ePlayer Options &b(Right Click)")).build();
-        eGlowItem = new ItemBuilder(Material.GLOWSTONE, 1).setDisplayName(colorize(DevLobby.getInstance().getConfig().getString("Language.EGlow.Name"))).setLoreByArray(DevLobby.getInstance().replaceAllinArray(new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.EGlow.Lore")), "<require>", Rank.getRankNameColorize(PlayerOptionItemBuilder.getEglowRank()), true)).setStringNBT("IsEGlowItem", "true").build();
-        BuyRank = new ItemBuilder(Material.ENCHANTED_BOOK, 1).setDisplayName(colorize("&eRank Shop &b(Right Click)")).build();
+        Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
+            LobbySelector = new ItemBuilder(Material.CLOCK, 1).setDisplayName(colorize("&eLobby Selector &b(Right Click)")).build();
+            PlayerOption = new ItemBuilder(Material.BOOK, 1).setDisplayName(colorize("&ePlayer Options &b(Right Click)")).build();
+            eGlowItem = new ItemBuilder(Material.GLOWSTONE, 1).setDisplayName(colorize(DevLobby.getInstance().getConfig().getString("Language.EGlow.Name"))).setLoreByArray(DevLobby.getInstance().replaceAllinArray(new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.EGlow.Lore")), "<require>", Rank.getRankNameColorize(PlayerOptionItemBuilder.getEglowRank()), true)).setStringNBT("IsEGlowItem", "true").build();
+            BuyRank = new ItemBuilder(Material.ENCHANTED_BOOK, 1).setDisplayName(colorize("&eRank Shop &b(Right Click)")).build();
+        });
     }
 
     public static ItemStack getLobbySelector() { return LobbySelector; }

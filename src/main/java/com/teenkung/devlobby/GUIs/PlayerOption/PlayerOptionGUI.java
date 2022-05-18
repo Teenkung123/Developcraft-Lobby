@@ -12,126 +12,72 @@ import java.util.HashMap;
 
 public class PlayerOptionGUI {
 
-    private static HashMap<Player, Inventory> GUIs;
-
-    public static void deletePlayerOptionGUI(Player player) {
-        GUIs.remove(player);
-    }
-
     public static void openGUI(Player player) {
-        if (GUIs.containsKey(player)) {
-            Inventory inv = Bukkit.createInventory(player, 54, "Player Options");
-            for (int i = 0; i < 54; i++) {
+        Inventory inv = Bukkit.createInventory(player, 54, "Player Options");
+        for (int i = 0; i < 54; i++) {
 
-                //Fly
-                if (i == 10) {
-                    if (SQLManager.getPlayer(player).getFly()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getFlyItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getFlyItem(player, false));
-                    }
-                }
-                //Join Message
-                else if (i == 12) {
-                    if (SQLManager.getPlayer(player).getJoinMessage()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, false));
-                    }
-                }
-                //Join Firework
-                else if (i == 14) {
-                    if (SQLManager.getPlayer(player).getJoinFirework()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, false));
-                    }
-                }
-                //Vanish
-                else if (i == 16) {
-                    if (SQLManager.getPlayer(player).getVanish()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, false));
-                    }
-                }
-                //Player Hide
-                else if (i == 28) {
-                    if (SQLManager.getPlayer(player).getHidePlayer()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, false));
-                    }
-                }
-                //Speed Boost
-                else if (i == 30) {
-                    if (SQLManager.getPlayer(player).getSpeedBoost()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, false));
-                    }
-                }
-                //Jump Boost
-                else if (i == 32) {
-                    if (SQLManager.getPlayer(player).getJumpBoost()) {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, true));
-                    } else {
-                        inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, false));
-                    }
-                } else if (i == 53) {
-                    inv.setItem(i, ItemBuilderTemplate.getEGlowItem());
+            //Fly
+            if (i == 10) {
+                if (SQLManager.getPlayer(player).getFly()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getFlyItem(player, true));
                 } else {
-                    inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1).setDisplayName(" ").build());
+                    inv.setItem(i, PlayerOptionItemBuilder.getFlyItem(player, false));
                 }
             }
-            GUIs.put(player, inv);
-            player.openInventory(inv);
-
-        } else {
-            Inventory inv = GUIs.get(player);
-            if (SQLManager.getPlayer(player).getFly()) {
-                inv.setItem(10, PlayerOptionItemBuilder.getFlyItem(player, true));
-            } else {
-                inv.setItem(10, PlayerOptionItemBuilder.getFlyItem(player, false));
+            //Join Message
+            else if (i == 12) {
+                if (SQLManager.getPlayer(player).getJoinMessage()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJoinMessageItem(player, false));
+                }
             }
-
-            if (SQLManager.getPlayer(player).getJoinMessage()) {
-                inv.setItem(12, PlayerOptionItemBuilder.getJoinMessageItem(player, true));
-            } else {
-                inv.setItem(12, PlayerOptionItemBuilder.getJoinMessageItem(player, false));
+            //Join Firework
+            else if (i == 14) {
+                if (SQLManager.getPlayer(player).getJoinFirework()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJoinFireworkItem(player, false));
+                }
             }
-
-            if (SQLManager.getPlayer(player).getJoinFirework()) {
-                inv.setItem(14, PlayerOptionItemBuilder.getJoinFireworkItem(player, true));
-            } else {
-                inv.setItem(14, PlayerOptionItemBuilder.getJoinFireworkItem(player, false));
+            //Vanish
+            else if (i == 16) {
+                if (SQLManager.getPlayer(player).getVanish()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getVanishItem(player, false));
+                }
             }
-
-            if (SQLManager.getPlayer(player).getVanish()) {
-                inv.setItem(16, PlayerOptionItemBuilder.getVanishItem(player, true));
-            } else {
-                inv.setItem(16, PlayerOptionItemBuilder.getVanishItem(player, false));
+            //Player Hide
+            else if (i == 28) {
+                if (SQLManager.getPlayer(player).getHidePlayer()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getHidePlayer(player, false));
+                }
             }
-
-            if (SQLManager.getPlayer(player).getHidePlayer()) {
-                inv.setItem(28, PlayerOptionItemBuilder.getHidePlayer(player, true));
-            } else {
-                inv.setItem(28, PlayerOptionItemBuilder.getHidePlayer(player, false));
+            //Speed Boost
+            else if (i == 30) {
+                if (SQLManager.getPlayer(player).getSpeedBoost()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getSpeedBoostItem(player, false));
+                }
             }
-
-            if (SQLManager.getPlayer(player).getSpeedBoost()) {
-                inv.setItem(30, PlayerOptionItemBuilder.getSpeedBoostItem(player, true));
+            //Jump Boost
+            else if (i == 32) {
+                if (SQLManager.getPlayer(player).getJumpBoost()) {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, true));
+                } else {
+                    inv.setItem(i, PlayerOptionItemBuilder.getJumpBoostItem(player, false));
+                }
+            } else if (i == 53) {
+                inv.setItem(i, ItemBuilderTemplate.getEGlowItem());
             } else {
-                inv.setItem(30, PlayerOptionItemBuilder.getSpeedBoostItem(player, false));
+                inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1).setDisplayName(" ").build());
             }
-
-            if (SQLManager.getPlayer(player).getJumpBoost()) {
-                inv.setItem(32, PlayerOptionItemBuilder.getJumpBoostItem(player, true));
-            } else {
-                inv.setItem(32, PlayerOptionItemBuilder.getJumpBoostItem(player, false));
-            }
-            player.openInventory(inv);
         }
+        player.openInventory(inv);
     }
 
 }

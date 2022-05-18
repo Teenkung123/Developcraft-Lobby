@@ -6,7 +6,6 @@ import com.teenkung.devlobby.Utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -16,11 +15,10 @@ import static com.teenkung.devlobby.DevLobby.colorize;
 import static com.teenkung.devlobby.DevLobby.getEconomy;
 
 public class BuyRankBuilder {
-
-    private static HashMap<Player, Inventory> GUIs;
-    private static HashMap<Rank, Boolean> AllowedBuy;
-    private static HashMap<Rank, Double> BuyPrice;
-    private static HashMap<Rank, ArrayList<String>> Description;
+    private static final HashMap<Rank, Boolean> AllowedBuy = new HashMap<>();
+    private static final HashMap<Rank, Double> BuyPrice = new HashMap<>();
+    private static final HashMap<Rank, ArrayList<String>> Description = new HashMap<>();
+    private static final HashMap<Rank, Double> RealPrice = new HashMap<>();
     private static Double TopupMultiplier;
 
     private static String NotEnoughMoneyMessage;
@@ -33,34 +31,42 @@ public class BuyRankBuilder {
     private static String EstimateMoney;
 
     public static void loadRankBuilder() {
-        NotEnoughMoneyMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Not-Enough-Money");
-        EnoughMoneyMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Enough-Money");
-        AlreadyOwnedMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Already-Own");
-        NotOwnedMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Not-Owned-Yet");
-        BuyableMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Buyable");
-        UnBuyableMessage = DevLobby.getInstance().getConfig().getString("BuyRank.UnBuyable");
-        RequirePrevious = DevLobby.getInstance().getConfig().getString("BuyRank.Require-Previous");
-        EstimateMoney =DevLobby.getInstance().getConfig().getString("BuyRank.Estimate-Money");
+        Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
+            NotEnoughMoneyMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Not-Enough-Money");
+            EnoughMoneyMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Enough-Money");
+            AlreadyOwnedMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Already-Own");
+            NotOwnedMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Not-Owned-Yet");
+            BuyableMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Buyable");
+            UnBuyableMessage = DevLobby.getInstance().getConfig().getString("BuyRank.UnBuyable");
+            RequirePrevious = DevLobby.getInstance().getConfig().getString("BuyRank.Require-Previous");
+            EstimateMoney = DevLobby.getInstance().getConfig().getString("BuyRank.Estimate-Money");
 
-        TopupMultiplier = DevLobby.getInstance().getConfig().getDouble("BuyRank.Topup-Multiplier");
+            TopupMultiplier = DevLobby.getInstance().getConfig().getDouble("BuyRank.Topup-Multiplier");
 
-        Description.put(Rank.GUARDIAN, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Guardian.Description")));
-        Description.put(Rank.HERO, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Hero.Description")));
-        Description.put(Rank.TITAN, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Titan.Description")));
-        Description.put(Rank.DRAGON, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Dragon.Description")));
-        Description.put(Rank.SUPREME, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Supreme.Description")));
+            Description.put(Rank.GUARDIAN, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Guardian.Description")));
+            Description.put(Rank.HERO, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Hero.Description")));
+            Description.put(Rank.TITAN, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Titan.Description")));
+            Description.put(Rank.DRAGON, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Dragon.Description")));
+            Description.put(Rank.SUPREME, new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("BuyRank.Supreme.Description")));
 
-        BuyPrice.put(Rank.GUARDIAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Guardian.Price"));
-        BuyPrice.put(Rank.HERO, DevLobby.getInstance().getConfig().getDouble("BuyRank.Hero.Price"));
-        BuyPrice.put(Rank.TITAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Titan.Price"));
-        BuyPrice.put(Rank.DRAGON, DevLobby.getInstance().getConfig().getDouble("BuyRank.Dragon.Price"));
-        BuyPrice.put(Rank.SUPREME, DevLobby.getInstance().getConfig().getDouble("BuyRank.Supreme.Price"));
+            BuyPrice.put(Rank.GUARDIAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Guardian.Price"));
+            BuyPrice.put(Rank.HERO, DevLobby.getInstance().getConfig().getDouble("BuyRank.Hero.Price"));
+            BuyPrice.put(Rank.TITAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Titan.Price"));
+            BuyPrice.put(Rank.DRAGON, DevLobby.getInstance().getConfig().getDouble("BuyRank.Dragon.Price"));
+            BuyPrice.put(Rank.SUPREME, DevLobby.getInstance().getConfig().getDouble("BuyRank.Supreme.Price"));
 
-        AllowedBuy.put(Rank.GUARDIAN, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Guardian.Buyable"));
-        AllowedBuy.put(Rank.HERO, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Hero.Buyable"));
-        AllowedBuy.put(Rank.TITAN, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Titan.Buyable"));
-        AllowedBuy.put(Rank.DRAGON, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Dragon.Buyable"));
-        AllowedBuy.put(Rank.SUPREME, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Supreme.Buyable"));
+            AllowedBuy.put(Rank.GUARDIAN, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Guardian.Buyable"));
+            AllowedBuy.put(Rank.HERO, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Hero.Buyable"));
+            AllowedBuy.put(Rank.TITAN, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Titan.Buyable"));
+            AllowedBuy.put(Rank.DRAGON, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Dragon.Buyable"));
+            AllowedBuy.put(Rank.SUPREME, DevLobby.getInstance().getConfig().getBoolean("BuyRank.Supreme.Buyable"));
+
+            RealPrice.put(Rank.GUARDIAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Guardian.Bath"));
+            RealPrice.put(Rank.HERO, DevLobby.getInstance().getConfig().getDouble("BuyRank.Hero.Bath"));
+            RealPrice.put(Rank.TITAN, DevLobby.getInstance().getConfig().getDouble("BuyRank.Titan.Bath"));
+            RealPrice.put(Rank.DRAGON, DevLobby.getInstance().getConfig().getDouble("BuyRank.Dragon.Bath"));
+            RealPrice.put(Rank.SUPREME, DevLobby.getInstance().getConfig().getDouble("BuyRank.Supreme.Bath"));
+        });
     }
 
     public static ItemStack buildRankItem(Player player, Rank rank) {
@@ -78,25 +84,25 @@ public class BuyRankBuilder {
         } else {
             item = new ItemBuilder(Material.STONE, 1).setDisplayName(colorize("&cUnknown"));
         }
+        item.setGlowing(true);
         ArrayList<String> lore = new ArrayList<>(Description.get(rank));
         lore.add(" ");
+        Bukkit.broadcastMessage(Rank.getFromPlayer(player).toString() + " " + rank);
         if (Rank.getFromPlayer(player).isHigherOrEqual(rank)) {
             lore.add(AlreadyOwnedMessage);
             return item.setLoreByArray(DevLobby.colorizeArray(lore)).setStringNBT("CancelEvent", "true").build();
         } else {
             lore.add(NotOwnedMessage);
-            lore.add(" ");
+            lore.add(EstimateMoney.replace("<bath>", String.valueOf(RealPrice.get(rank) / TopupMultiplier)).replace("<multiplier>", String.valueOf(TopupMultiplier)));
             if (AllowedBuy.get(rank)) {
                 lore.add(BuyableMessage.replace("<price>", String.valueOf(BuyPrice.get(rank))));
-                lore.add(" ");
                 if (Rank.getLowerRank(rank) != Rank.getFromPlayer(player)) {
                     lore.add(RequirePrevious.replace("<rank>", Rank.getRankNameColorize(Rank.getLowerRank(rank))));
                     return item.setStringNBT("CancelEvent", "true").setLoreByArray(DevLobby.colorizeArray(lore)).build();
                 } else {
-                    lore.add(" ");
                     if (getEconomy().getBalance(Bukkit.getOfflinePlayer(player.getUniqueId())) < BuyPrice.get(rank)) {
-                       lore.add(NotEnoughMoneyMessage.replace("<require>", String.valueOf(BuyPrice.get(rank) - getEconomy().getBalance(Bukkit.getOfflinePlayer(player.getUniqueId())))));
-                       return item.setStringNBT("CancelEvent", "true").setLoreByArray(DevLobby.colorizeArray(lore)).build();
+                        lore.add(NotEnoughMoneyMessage.replace("<require>", String.valueOf(BuyPrice.get(rank) - getEconomy().getBalance(Bukkit.getOfflinePlayer(player.getUniqueId())))));
+                        return item.setStringNBT("CancelEvent", "true").setLoreByArray(DevLobby.colorizeArray(lore)).build();
                     } else {
                         lore.add(EnoughMoneyMessage);
                         return item.setLoreByArray(DevLobby.colorizeArray(lore)).setStringNBT("RankType", Rank.getString(rank)).build();
@@ -104,8 +110,6 @@ public class BuyRankBuilder {
                 }
             } else {
                 lore.add(UnBuyableMessage);
-                lore.add(" ");
-                //lore.add(EstimateMoney.replace("<bath>"))
                 return item.setStringNBT("CancelEvent", "true").setLoreByArray(DevLobby.colorizeArray(lore)).build();
             }
         }

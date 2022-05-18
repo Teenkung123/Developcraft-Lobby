@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ItemBuilder {
 
@@ -28,10 +27,6 @@ public class ItemBuilder {
         this.itemStack = stack;
         this.itemMeta = this.itemStack.getItemMeta();
         this.itemNBT = new NBTItem(this.itemStack);
-    }
-
-    public String getDisplayName() {
-        return itemMeta.getDisplayName();
     }
 
     public String getStringNBT(String key) {
@@ -57,11 +52,6 @@ public class ItemBuilder {
         } else {
             this.amount = amount;
         }
-        return this;
-    }
-
-    public ItemBuilder setLore(String... lines) {
-        this.itemMeta.setLore(Arrays.asList(lines));
         return this;
     }
 

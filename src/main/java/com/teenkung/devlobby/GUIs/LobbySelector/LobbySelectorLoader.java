@@ -4,6 +4,7 @@ import com.teenkung.devlobby.DevLobby;
 import com.teenkung.devlobby.Utils.ConfigLoader;
 import com.teenkung.devlobby.Utils.ItemBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -44,32 +45,35 @@ public class LobbySelectorLoader {
 
     public static void setupLobbyItem() {
 
-        ClickSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Click-Sound.Sound", "BLOCK_DISPENSER_DISPENSE"));
-        OpenSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Open-Sound.Sound", "BLOCK_CHES_OPEN"));
+        Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
 
-        ClickSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Volume", 1)).floatValue();
-        OpenSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Volume", 1)).floatValue();
+            ClickSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Click-Sound.Sound", "BLOCK_DISPENSER_DISPENSE"));
+            OpenSound = Sound.valueOf(DevLobby.getInstance().getConfig().getString("LobbySelector.GUI.Open-Sound.Sound", "BLOCK_CHES_OPEN"));
 
-        ClickSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Pitch", 1)).floatValue();
-        OpenSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Pitch", 1)).floatValue();
+            ClickSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Volume", 1)).floatValue();
+            OpenSoundVolume = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Volume", 1)).floatValue();
 
-        ConfigurationSection section = DevLobby.getInstance().getConfig().getConfigurationSection("LobbySelector.Items");
-        if (section != null) {
-            LobbyKeys = new ArrayList<>(section.getKeys(false));
-            for (String key : LobbyKeys) {
-                LobbyItem.put(key, new ItemBuilder(ConfigLoader.getMaterial(section.getString(key + ".Item")), 1)
-                        .setDisplayName(colorize(section.getString(key + ".Name"))).setStringNBT("ItemID", key)
-                );
-                if (section.getBoolean(key + ".Glowing")) {
-                    LobbyItem.replace(key, LobbyItem.get(key).setGlowing(true));
+            ClickSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Click-Sound.Pitch", 1)).floatValue();
+            OpenSoundPitch = Double.valueOf(DevLobby.getInstance().getConfig().getDouble("LobbySelector.GUI.Open-Sound.Pitch", 1)).floatValue();
+
+            ConfigurationSection section = DevLobby.getInstance().getConfig().getConfigurationSection("LobbySelector.Items");
+            if (section != null) {
+                LobbyKeys = new ArrayList<>(section.getKeys(false));
+                for (String key : LobbyKeys) {
+                    LobbyItem.put(key, new ItemBuilder(ConfigLoader.getMaterial(section.getString(key + ".Item")), 1)
+                            .setDisplayName(colorize(section.getString(key + ".Name"))).setStringNBT("ItemID", key)
+                    );
+                    if (section.getBoolean(key + ".Glowing")) {
+                        LobbyItem.replace(key, LobbyItem.get(key).setGlowing(true));
+                    }
+                    LobbyConnect.put(key, section.getString(key + ".Connect"));
+                    LobbyVersion.put(key, section.getString(key + ".Version"));
+                    LobbyIP.put(key, section.getString(key + ".IP-Address"));
+                    LobbyLore.put(key, new ArrayList<>(section.getStringList(key + ".Lore")));
+                    LobbySlot.put(key, section.getInt(key + ".Slot"));
                 }
-                LobbyConnect.put(key, section.getString(key + ".Connect"));
-                LobbyVersion.put(key, section.getString(key + ".Version"));
-                LobbyIP.put(key, section.getString(key + ".IP-Address"));
-                LobbyLore.put(key, new ArrayList<>(section.getStringList(key + ".Lore")));
-                LobbySlot.put(key, section.getInt(key + ".Slot"));
             }
-        }
+        });
     }
 
     public static void updateLobbyItem() {

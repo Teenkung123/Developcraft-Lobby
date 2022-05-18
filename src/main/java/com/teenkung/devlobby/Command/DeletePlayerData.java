@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DeletePlayerData implements CommandExecutor {
-    private ArrayList<String> list = new ArrayList<>();
+    private final ArrayList<String> list = new ArrayList<>();
 
     @SuppressWarnings({"", "NullableProblems"})
     @Override
@@ -39,6 +39,7 @@ public class DeletePlayerData implements CommandExecutor {
                             sender.sendMessage("found total " + list.size() + " players");
                             //dispatch(list);
                         }
+                        st.close();
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

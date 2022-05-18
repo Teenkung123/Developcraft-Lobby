@@ -1,6 +1,7 @@
 package com.teenkung.devlobby;
 
 import com.teenkung.devlobby.Command.DeletePlayerData;
+import com.teenkung.devlobby.GUIs.BuyRank.BuyRankBuilder;
 import com.teenkung.devlobby.GUIs.BuyRank.BuyRankHandler;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUIHandler;
@@ -82,6 +83,7 @@ public final class DevLobby extends JavaPlugin {
         LobbySelectorGUI.createLobbySelectorGUI();
         LobbySelectorLoader.setupLobbyItem();
         LobbySelectorLoader.updateLobbyItem();
+        BuyRankBuilder.loadRankBuilder();
 
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ChatHandler(), this);
@@ -112,6 +114,7 @@ public final class DevLobby extends JavaPlugin {
     public static Connection getConnection() { return connection; }
 
     public static String colorize(String message) {
+        if (message == null) { message = ""; }
         Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
         Matcher matcher = pattern.matcher(message);
         while (matcher.find()) {

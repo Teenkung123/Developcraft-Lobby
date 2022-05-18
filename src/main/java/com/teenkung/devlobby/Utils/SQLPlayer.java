@@ -40,13 +40,6 @@ public class SQLPlayer {
                 HidePlayer = rs.getInt("HidePlayer") == 1;
                 SpeedBoost = rs.getInt("SpeedBoost") == 1;
                 JumpBoost = rs.getInt("JumpBoost") == 1;
-                System.out.println(Fly.toString());
-                System.out.println(JoinMessage.toString());
-                System.out.println(JoinFirework.toString());
-                System.out.println(Vanish.toString());
-                System.out.println(HidePlayer.toString());
-                System.out.println(SpeedBoost.toString());
-                System.out.println(JumpBoost.toString());
             } else {
                 Fly = false;
                 JoinMessage = true;

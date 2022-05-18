@@ -19,10 +19,6 @@ public class SQLManager {
         PlayerData.remove(player);
     }
 
-    public static Boolean isContains(Player player) {
-        return PlayerData.containsKey(player);
-    }
-
     public static SQLPlayer getPlayer(Player player) {
         if (!PlayerData.containsKey(player)) {
             PlayerData.put(player, new SQLPlayer(player.getUniqueId()));
