@@ -10,6 +10,7 @@ import com.teenkung.devlobby.GUIs.LobbySelector.PluginMessage;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionEventHandler;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
 import com.teenkung.devlobby.Handlers.*;
+import com.teenkung.devlobby.Utils.ConfigLoader;
 import com.teenkung.devlobby.Utils.ItemBuilderTemplate;
 import com.teenkung.devlobby.Utils.LobbyDatabase;
 import net.milkbowl.vault.chat.Chat;
@@ -19,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -96,10 +98,18 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JumpPadHandler(), this);
         Bukkit.getPluginManager().registerEvents(new BuyRankHandler(), this);
         Bukkit.getPluginManager().registerEvents(new InteractionHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new ColoredSignHandler(), this);
 
         Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, LobbySelectorLoader::updateLobbyItem, 200, 200);
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!player.getWorld().equals(ConfigLoader.getSpawnLocation().getWorld()) && !player.isOp()) {
+                    player.teleport(ConfigLoader.getSpawnLocation());
+                }
+            }
+        }, 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, LobbySelectorLoader::updateLobbyItem, 10, 200);
 
     }
 

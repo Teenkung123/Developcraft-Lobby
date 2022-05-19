@@ -95,7 +95,7 @@ public class BuyRankBuilder {
             return item.setLoreByArray(DevLobby.colorizeArray(lore)).setStringNBT("CancelEvent", "true").build();
         } else {
             lore.add(NotOwnedMessage);
-            lore.add(EstimateMoney.replace("<bath>", String.valueOf(RealPrice.get(rank) / TopupMultiplier)).replace("<multiplier>", String.valueOf(TopupMultiplier)));
+            lore.add(EstimateMoney.replace("<bath>", String.valueOf((int) (RealPrice.get(rank) / TopupMultiplier))).replace("<multiplier>", String.valueOf(TopupMultiplier)).replace("<default>", String.valueOf(RealPrice.get(rank))));
             if (AllowedBuy.get(rank)) {
                 lore.add(BuyableMessage.replace("<price>", String.valueOf(BuyPrice.get(rank))));
                 if (Rank.getLowerRank(rank) != Rank.getFromPlayer(player)) {

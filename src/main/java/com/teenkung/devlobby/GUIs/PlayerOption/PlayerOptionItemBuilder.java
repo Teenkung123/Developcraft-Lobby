@@ -73,6 +73,14 @@ public class PlayerOptionItemBuilder {
         });
     }
 
+    public static Rank getFlyRank() { return FlyItemRank; }
+    public static Rank getJoinMessageRank() { return JoinMessageRank; }
+    public static Rank getJoinFireworkRank() { return JoinFireworkRank; }
+    public static Rank getVanishRank() { return VanishRank; }
+    public static Rank getHidePlayerRank() { return HidePlayerRank; }
+    public static Rank getSpeedBoostRank() { return SpeedBoostRank; }
+    public static Rank getJumpBoostRank() { return JumpBoostRank; }
+
     public static Rank getEglowRank() { return EGlowRank; }
     public static ItemStack getFlyItem(Player player,Boolean glowing) {
         if (glowing) {

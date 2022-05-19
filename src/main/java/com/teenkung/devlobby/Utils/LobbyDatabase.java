@@ -1,13 +1,13 @@
 package com.teenkung.devlobby.Utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.teenkung.devlobby.DevLobby;
+
+import java.sql.*;
 
 public class LobbyDatabase {
 
     private Connection connection;
+    private Long Time;
 
     public void Connect() throws SQLException {
         connection = DriverManager.getConnection(

@@ -137,7 +137,7 @@ BuyRank:
   Not-Owned-Yet: '&cยังไม่มีในครอบครอง'
   Buyable: '&7หรือซื้อได้ในราคา &e<price> Coins'
   UnBuyable: '&7สามารถซื้อได้ผ่าน &eWebshop &7เซิร์ฟเวอร์!'
-  Estimate-Money: '&7ราคาโดยประมาณ: <bath> บาท &8(เติมเงินคูณ <multiplier>)'
+  Estimate-Money: '&7ราคาโดยประมาณ: <bath> บาท จาก <default> บาท &8(เติมเงินคูณ <multiplier>)'
 
   Guardian:
     Buyable: true

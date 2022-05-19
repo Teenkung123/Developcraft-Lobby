@@ -99,12 +99,11 @@ public class LobbySelectorLoader {
                 lore.add(onlineLore.replace("<max>", plrMax).replace("<online>", plrOnline));
             }
 
-                int onlines;
+            int onlines = 1;
             try {
                 onlines = Integer.parseInt(ChatColor.stripColor(plrOnline));
             } catch(NumberFormatException e) {
                 System.out.println(colorize("&eCould not load placeholder Status setting online players to 1"));
-                onlines = 1;
             }
             LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(onlines).build());
             lore.clear();
