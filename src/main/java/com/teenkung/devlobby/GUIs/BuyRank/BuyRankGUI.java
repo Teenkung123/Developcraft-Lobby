@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 public class BuyRankGUI {
 
     private static final ItemStack Background = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1).setDisplayName(" ").build();

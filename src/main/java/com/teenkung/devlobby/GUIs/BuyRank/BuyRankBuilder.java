@@ -30,6 +30,9 @@ public class BuyRankBuilder {
     private static String RequirePrevious;
     private static String EstimateMoney;
 
+    public static Boolean getAllowedBuy(Rank rank) { return AllowedBuy.get(rank); }
+    public static Double getBuyPrice(Rank rank) { return BuyPrice.get(rank); }
+
     public static void loadRankBuilder() {
         Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
             NotEnoughMoneyMessage = DevLobby.getInstance().getConfig().getString("BuyRank.Not-Enough-Money");
@@ -87,7 +90,6 @@ public class BuyRankBuilder {
         item.setGlowing(true);
         ArrayList<String> lore = new ArrayList<>(Description.get(rank));
         lore.add(" ");
-        Bukkit.broadcastMessage(Rank.getFromPlayer(player).toString() + " " + rank);
         if (Rank.getFromPlayer(player).isHigherOrEqual(rank)) {
             lore.add(AlreadyOwnedMessage);
             return item.setLoreByArray(DevLobby.colorizeArray(lore)).setStringNBT("CancelEvent", "true").build();

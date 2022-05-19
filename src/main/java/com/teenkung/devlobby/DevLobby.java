@@ -95,6 +95,7 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LobbySelectorGUIHandler(), this);
         Bukkit.getPluginManager().registerEvents(new JumpPadHandler(), this);
         Bukkit.getPluginManager().registerEvents(new BuyRankHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new InteractionHandler(), this);
 
         Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
 

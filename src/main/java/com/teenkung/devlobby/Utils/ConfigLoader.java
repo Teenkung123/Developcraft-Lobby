@@ -1,6 +1,8 @@
 package com.teenkung.devlobby.Utils;
 
 import com.teenkung.devlobby.DevLobby;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,6 +15,8 @@ import java.util.Objects;
 import static com.teenkung.devlobby.DevLobby.colorize;
 
 public class ConfigLoader {
+
+    private static Location SpawnLocation;
 
     public static FileConfiguration getConfig() {
         return DevLobby.getInstance().getConfig();
@@ -191,5 +195,22 @@ public class ConfigLoader {
     public static Material getMaterial(String material) {
         Material mat = Material.getMaterial(material);
         return Objects.requireNonNullElse(mat, Material.STONE);
+    }
+
+    public static Location getSpawnLocation() {
+        if (SpawnLocation == null) {
+            Location loc = new Location(
+                    Bukkit.getWorld(getConfig().getString("SpawnLocation.World", "spawn-new")),
+                    getConfig().getInt("SpawnLocation.X"),
+                    getConfig().getInt("SpawnLocation.Y"),
+                    getConfig().getInt("SpawnLocation.Z"),
+                    getConfig().getInt("SpawnLocation.Yaw"),
+                    getConfig().getInt("SpawnLocation.Pitch")
+            );
+            SpawnLocation = loc;
+            return loc;
+        } else {
+            return SpawnLocation;
+        }
     }
 }

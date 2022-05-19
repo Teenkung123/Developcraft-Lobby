@@ -21,6 +21,7 @@ public class JoinHandler implements Listener {
         Rank Group = Rank.getRank(DevLobby.getPermissions().getPrimaryGroup(player));
         player.setHealth(20);
         player.setFoodLevel(20);
+        player.teleport(ConfigLoader.getSpawnLocation());
         if (SQLplayer.getJoinFirework() && Group != Rank.DEFAULT) {
             SummonFirework(player, Group);
         }
@@ -39,6 +40,7 @@ public class JoinHandler implements Listener {
         player.getInventory().setItem(0, ItemBuilderTemplate.getLobbySelector());
         player.getInventory().setItem(1, ItemBuilderTemplate.getRankShopItem());
         player.getInventory().setItem(8, ItemBuilderTemplate.getPlayerOption());
+        player.getInventory().setItem(7, ItemBuilderTemplate.getPVPItem());
     }
 
 

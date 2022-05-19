@@ -98,7 +98,15 @@ public class LobbySelectorLoader {
             } else {
                 lore.add(onlineLore.replace("<max>", plrMax).replace("<online>", plrOnline));
             }
-            LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(Integer.parseInt(ChatColor.stripColor(plrOnline))).build());
+
+                int onlines;
+            try {
+                onlines = Integer.parseInt(ChatColor.stripColor(plrOnline));
+            } catch(NumberFormatException e) {
+                System.out.println(colorize("&eCould not load placeholder Status setting online players to 1"));
+                onlines = 1;
+            }
+            LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(onlines).build());
             lore.clear();
         }
     }
