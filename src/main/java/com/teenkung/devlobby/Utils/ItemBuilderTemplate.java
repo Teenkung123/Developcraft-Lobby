@@ -24,7 +24,7 @@ public class ItemBuilderTemplate {
             PlayerOption = new ItemBuilder(Material.BOOK, 1).setDisplayName(colorize("&ePlayer Options &b(Right Click)")).build();
             eGlowItem = new ItemBuilder(Material.GLOWSTONE, 1).setDisplayName(colorize(DevLobby.getInstance().getConfig().getString("Language.EGlow.Name"))).setLoreByArray(DevLobby.getInstance().replaceAllinArray(new ArrayList<>(DevLobby.getInstance().getConfig().getStringList("Language.EGlow.Lore")), "<require>", Rank.getRankNameColorize(PlayerOptionItemBuilder.getEglowRank()), true)).setStringNBT("IsEGlowItem", "true").build();
             BuyRank = new ItemBuilder(Material.ENCHANTED_BOOK, 1).setDisplayName(colorize("&eRank Shop &b(Right Click)")).build();
-            PVPItem = new ItemBuilder(Material.DIAMOND_SWORD, 1).setDisplayName(colorize("&ePVP Mode &c(Coming Soon! Under Maintenance)")).build();
+            PVPItem = new ItemBuilder(Material.DIAMOND_SWORD, 1).setDisplayName(colorize("&ePVP Mode &b(Hold for 3 seconds)")).build();
         });
     }
 

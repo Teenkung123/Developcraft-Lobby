@@ -5,6 +5,14 @@ Database:
   Password: minecraft
   Database: minigame
 
+PVP:
+  Message: '&e[Developcraft] &fกำลังเข้าสู่โหมด PVP ใน &c<second>'
+  Message-2: '&e[Developcraft] &fเข้าสู่โหมด PVP เรียบร้อยแล้ว &cวิธีการออกจากโหมด PVP ให้พิมพ์ /leave-pvp'
+  Message-3: '&e[Developcraft] &cไม่สามารถออกจากโหมด PVP ได้เนื่องจากดูเหมือนว่าคุณกำลัง PVP กับผู้เล่นอื่น'
+  Message-4: '&e[Developcraft] &aออกจากโหมด PVP แล้ว'
+  Death-Message: '&4<victim> &cถูกสังหารโดย &a<attacker>'
+  Death-Message-2: '&4<victim> &cตาย'
+
 SpawnLocation:
   X: 0
   Y: 0

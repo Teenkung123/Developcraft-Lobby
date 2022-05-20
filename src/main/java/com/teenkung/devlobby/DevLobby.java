@@ -1,6 +1,9 @@
 package com.teenkung.devlobby;
 
+import com.github.sirblobman.combatlogx.api.ICombatLogX;
+import com.github.sirblobman.combatlogx.api.ICombatManager;
 import com.teenkung.devlobby.Command.DeletePlayerData;
+import com.teenkung.devlobby.Command.PVPCommand;
 import com.teenkung.devlobby.GUIs.BuyRank.BuyRankBuilder;
 import com.teenkung.devlobby.GUIs.BuyRank.BuyRankHandler;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
@@ -10,17 +13,21 @@ import com.teenkung.devlobby.GUIs.LobbySelector.PluginMessage;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionEventHandler;
 import com.teenkung.devlobby.GUIs.PlayerOption.PlayerOptionItemBuilder;
 import com.teenkung.devlobby.Handlers.*;
-import com.teenkung.devlobby.Utils.ConfigLoader;
-import com.teenkung.devlobby.Utils.ItemBuilderTemplate;
-import com.teenkung.devlobby.Utils.LobbyDatabase;
+import com.teenkung.devlobby.Utils.*;
+import com.teenkung.devlobby.pvp.PVPHandler;
+import com.teenkung.devlobby.pvp.PVPLoader;
+import com.yapzhenyie.GadgetsMenu.api.GadgetsMenuAPI;
+import com.yapzhenyie.GadgetsMenu.player.PlayerManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -86,6 +93,7 @@ public final class DevLobby extends JavaPlugin {
         LobbySelectorLoader.setupLobbyItem();
         LobbySelectorLoader.updateLobbyItem();
         BuyRankBuilder.loadRankBuilder();
+        PVPLoader.loadConfig();
 
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ChatHandler(), this);
@@ -99,8 +107,26 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BuyRankHandler(), this);
         Bukkit.getPluginManager().registerEvents(new InteractionHandler(), this);
         Bukkit.getPluginManager().registerEvents(new ColoredSignHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new PVPHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new DeathHandler(), this);
 
         Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
+        Objects.requireNonNull(getCommand("leave-pvp")).setExecutor(new PVPCommand());
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            for (ItemStack stack : player.getInventory().getContents()) {
+                if (stack == null) { continue; }
+                if (stack.getType().equals(Material.DIAMOND_HELMET) || stack.getType().equals(Material.DIAMOND_CHESTPLATE) || stack.getType().equals(Material.DIAMOND_LEGGINGS) || stack.getType().equals(Material.DIAMOND_BOOTS) || stack.getType().equals(Material.NETHERITE_SWORD)) {
+                    player.getInventory().clear();
+                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                        PlayerManager manager = GadgetsMenuAPI.getPlayerManager(player);
+                        manager.giveMenuSelector();
+                        SQLPlayer sql = SQLManager.getPlayer(player);
+                        sql.executeAll();
+                        JoinHandler.setSlot(player);
+                    }, 2);
+                }
+            }
+        }
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -123,6 +149,7 @@ public final class DevLobby extends JavaPlugin {
     //This method is for getting this class's Instance from another class
     public static DevLobby getInstance() { return Instance; }
     public static Connection getConnection() { return connection; }
+
 
     public static String colorize(String message) {
         if (message == null) { message = ""; }

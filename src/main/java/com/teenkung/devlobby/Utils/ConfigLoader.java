@@ -201,9 +201,9 @@ public class ConfigLoader {
         if (SpawnLocation == null) {
             Location loc = new Location(
                     Bukkit.getWorld(getConfig().getString("SpawnLocation.World", "spawn-new")),
-                    getConfig().getInt("SpawnLocation.X"),
-                    getConfig().getInt("SpawnLocation.Y"),
-                    getConfig().getInt("SpawnLocation.Z"),
+                    getConfig().getDouble("SpawnLocation.X"),
+                    getConfig().getDouble("SpawnLocation.Y"),
+                    getConfig().getDouble("SpawnLocation.Z"),
                     getConfig().getInt("SpawnLocation.Yaw"),
                     getConfig().getInt("SpawnLocation.Pitch")
             );

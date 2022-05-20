@@ -10,9 +10,7 @@ public class FoodHandler implements Listener {
 
     @EventHandler
     public void onFoodChange(FoodLevelChangeEvent event) {
-        if (!PVPManager.isPlaying((Player) event.getEntity())) {
-            event.setCancelled(true);
-        }
+        event.setCancelled(!PVPManager.isPlaying(((Player) event.getEntity()).getPlayer()));
     }
 
 }

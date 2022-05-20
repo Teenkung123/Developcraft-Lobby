@@ -2,6 +2,8 @@ package com.teenkung.devlobby.Handlers;
 
 import com.teenkung.devlobby.DevLobby;
 import com.teenkung.devlobby.Utils.*;
+import com.yapzhenyie.GadgetsMenu.api.GadgetsMenuAPI;
+import com.yapzhenyie.GadgetsMenu.player.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -31,12 +33,15 @@ public class JoinHandler implements Listener {
             event.setJoinMessage(null);
         }
         //PlayerOptionGUI.openGUI(player);
+        player.getInventory().clear();
+        PlayerManager manager = GadgetsMenuAPI.getPlayerManager(player);
         setSlot(player);
+        manager.giveMenuSelector();
 
         SQLplayer.executeAll();
     }
 
-    private void setSlot(Player player) {
+    public static void setSlot(Player player) {
         player.getInventory().setItem(0, ItemBuilderTemplate.getLobbySelector());
         player.getInventory().setItem(1, ItemBuilderTemplate.getRankShopItem());
         player.getInventory().setItem(8, ItemBuilderTemplate.getPlayerOption());
@@ -45,32 +50,30 @@ public class JoinHandler implements Listener {
 
 
     private void SummonFirework(Player player, Rank Group) {
-        Bukkit.getScheduler().runTaskAsynchronously(DevLobby.getInstance(), () -> {
-            for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
-                Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
-                FireworkMeta meta = firework.getFireworkMeta();
+            Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
+            FireworkMeta meta = firework.getFireworkMeta();
 
-                if (Group == Rank.GUARDIAN || Group == Rank.GUARDIANF) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.YELLOW).with(FireworkEffect.Type.BALL_LARGE).build());
-                } else if (Group == Rank.HERO) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.PURPLE).withFade(Color.FUCHSIA).with(FireworkEffect.Type.BALL_LARGE).build());
-                } else if (Group == Rank.TITAN) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.AQUA).withFade(Color.BLUE).with(FireworkEffect.Type.BALL_LARGE).build());
-                } else if (Group == Rank.DRAGON) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.GREEN).withFade(Color.OLIVE).withFlicker().with(FireworkEffect.Type.BALL_LARGE).build());
-                } else if (Group == Rank.SUPREME) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.RED).with(FireworkEffect.Type.BALL_LARGE).build());
-                } else if (Group == Rank.YOUTUBER) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.RED).withFade(Color.RED).withFade(Color.WHITE).with(FireworkEffect.Type.BALL_LARGE).withFlicker().build());
-                } else if (Group == Rank.ADMIN) {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withColor(Color.WHITE).withFade(Color.RED).withColor(Color.WHITE).withFlicker().with(FireworkEffect.Type.BALL_LARGE).build());
-                } else {
-                    meta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withColor(Color.WHITE).build());
-                }
-                meta.setPower(1);
-                firework.setFireworkMeta(meta);
+            if (Group == Rank.GUARDIAN || Group == Rank.GUARDIANF) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.YELLOW).with(FireworkEffect.Type.BALL_LARGE).build());
+            } else if (Group == Rank.HERO) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.PURPLE).withFade(Color.FUCHSIA).with(FireworkEffect.Type.BALL_LARGE).build());
+            } else if (Group == Rank.TITAN) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.AQUA).withFade(Color.BLUE).with(FireworkEffect.Type.BALL_LARGE).build());
+            } else if (Group == Rank.DRAGON) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.GREEN).withFade(Color.OLIVE).withFlicker().with(FireworkEffect.Type.BALL_LARGE).build());
+            } else if (Group == Rank.SUPREME) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.WHITE).withFade(Color.RED).with(FireworkEffect.Type.BALL_LARGE).build());
+            } else if (Group == Rank.YOUTUBER) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.RED).withFade(Color.RED).withFade(Color.WHITE).with(FireworkEffect.Type.BALL_LARGE).withFlicker().build());
+            } else if (Group == Rank.ADMIN) {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withColor(Color.WHITE).withFade(Color.RED).withColor(Color.WHITE).withFlicker().with(FireworkEffect.Type.BALL_LARGE).build());
+            } else {
+                meta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withColor(Color.WHITE).build());
             }
-        });
+            meta.setPower(1);
+            firework.setFireworkMeta(meta);
+        }
     }
 }
