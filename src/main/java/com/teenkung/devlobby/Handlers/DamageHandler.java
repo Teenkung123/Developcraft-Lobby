@@ -33,10 +33,13 @@ public class DamageHandler implements Listener {
 
     @EventHandler
     public void onHit(ProjectileHitEvent event) {
+        event.getEntity().remove();
         if (event.getEntity().getShooter() instanceof  Player && event.getHitEntity() instanceof Player) {
             if (PVPManager.isPlaying((Player) event.getEntity().getShooter()) && PVPManager.isPlaying((Player) event.getHitEntity())) {
                 if ((event.getEntity().getShooter()) != null) {
-                    ((Player) event.getEntity().getShooter()).getInventory().addItem(new ItemStack(Material.ARROW, 2));
+                    if (((Player) event.getEntity().getShooter()).getPlayer() != ((Player) event.getHitEntity()).getPlayer()) {
+                        ((Player) event.getEntity().getShooter()).getInventory().addItem(new ItemStack(Material.ARROW, 2));
+                    }
                 }
             }
         }

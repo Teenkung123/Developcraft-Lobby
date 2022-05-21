@@ -116,6 +116,7 @@ public final class DevLobby extends JavaPlugin {
             for (ItemStack stack : player.getInventory().getContents()) {
                 if (stack == null) { continue; }
                 if (stack.getType().equals(Material.DIAMOND_HELMET) || stack.getType().equals(Material.DIAMOND_CHESTPLATE) || stack.getType().equals(Material.DIAMOND_LEGGINGS) || stack.getType().equals(Material.DIAMOND_BOOTS) || stack.getType().equals(Material.NETHERITE_SWORD)) {
+                    player.sendMessage(colorize("&eThe Developer has reload the plugin. &cSystem will force all Player to quit PVP Mode"));
                     player.getInventory().clear();
                     Bukkit.getScheduler().runTaskLater(this, () -> {
                         PlayerManager manager = GadgetsMenuAPI.getPlayerManager(player);
@@ -124,6 +125,7 @@ public final class DevLobby extends JavaPlugin {
                         sql.executeAll();
                         JoinHandler.setSlot(player);
                     }, 2);
+                    break;
                 }
             }
         }

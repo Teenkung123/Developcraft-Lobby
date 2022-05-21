@@ -10,7 +10,9 @@ import com.teenkung.devlobby.pvp.PVPLoader;
 import com.teenkung.devlobby.pvp.PVPManager;
 import com.yapzhenyie.GadgetsMenu.api.GadgetsMenuAPI;
 import com.yapzhenyie.GadgetsMenu.player.PlayerManager;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,21 +26,25 @@ public class PVPCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            if (PVPManager.isPlaying((Player) sender)) {
-                Player player = (Player) sender;
-                PVPManager.removePlayer(player);
-                sender.sendMessage(colorize(PVPLoader.getMessage4()));
-                player.getInventory().clear();
-                player.setHealth(20.0);
-                player.setFoodLevel(20);
-                player.getInventory().clear();
-                Bukkit.getScheduler().runTaskLater(DevLobby.getInstance(), () -> {
-                    PlayerManager manager = GadgetsMenuAPI.getPlayerManager(player);
-                    manager.giveMenuSelector();
-                    SQLPlayer sql = SQLManager.getPlayer(player);
-                    sql.executeAll();
-                    JoinHandler.setSlot(player);
-                }, 2);
+            if (ChatColor.stripColor(PlaceholderAPI.setPlaceholders((Player) sender, "%combatlogx_in_combat%")).equalsIgnoreCase("No")) {
+                if (PVPManager.isPlaying((Player) sender)) {
+                    Player player = (Player) sender;
+                    PVPManager.removePlayer(player);
+                    sender.sendMessage(colorize(PVPLoader.getMessage4()));
+                    player.getInventory().clear();
+                    player.setHealth(20.0);
+                    player.setFoodLevel(20);
+                    player.getInventory().clear();
+                    Bukkit.getScheduler().runTaskLater(DevLobby.getInstance(), () -> {
+                        PlayerManager manager = GadgetsMenuAPI.getPlayerManager(player);
+                        manager.giveMenuSelector();
+                        SQLPlayer sql = SQLManager.getPlayer(player);
+                        sql.executeAll();
+                        JoinHandler.setSlot(player);
+                    }, 2);
+                }
+            } else {
+                sender.sendMessage(colorize(PVPLoader.getMessage3()));
             }
         }
         return false;

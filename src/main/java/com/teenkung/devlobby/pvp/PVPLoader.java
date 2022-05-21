@@ -30,10 +30,10 @@ public class PVPLoader {
         message4 = ConfigLoader.getConfig().getString("PVP.Message-4");
 
         Helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
-        Helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        Helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 
         ChestPlate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-        ChestPlate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+        ChestPlate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
 
         Leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
         Leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);

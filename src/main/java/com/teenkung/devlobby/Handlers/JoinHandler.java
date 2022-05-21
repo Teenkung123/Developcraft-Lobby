@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import static com.teenkung.devlobby.DevLobby.colorize;
+
 public class JoinHandler implements Listener {
 
     @EventHandler
@@ -21,6 +23,9 @@ public class JoinHandler implements Listener {
         Player player = event.getPlayer();
         SQLPlayer SQLplayer = SQLManager.addPlayer(player);
         Rank Group = Rank.getRank(DevLobby.getPermissions().getPrimaryGroup(player));
+
+        System.out.println(colorize("&a" + player.getName() + "'s UUID is " + player.getUniqueId() + "&e and IP " + player.getAddress()));
+
         player.setHealth(20);
         player.setFoodLevel(20);
         player.teleport(ConfigLoader.getSpawnLocation());

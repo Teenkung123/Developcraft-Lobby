@@ -78,16 +78,23 @@ public class LobbySelectorLoader {
 
     public static void updateLobbyItem() {
         for (String key : LobbyKeys) {
-
             String versionLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Version", "&cGame Version: &f<version>");
             String statusLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Status", "&8> &fServer Status: <status>");
             String onlineLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Online", "&8> &fPlayers Online: &a<online>&f/&a<max>");
             String offlineLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Offline", "&8> &cCould not connect to target server due to it offline");
-
-            String online = PlaceholderAPI.setPlaceholders(null, "%pinger_isonline_" + LobbyIP.get(key) + "%");
-            String plrMax = PlaceholderAPI.setPlaceholders(null, "%pinger_max_" + LobbyIP.get(key) + "%");
-            String plrOnline = PlaceholderAPI.setPlaceholders(null, "%pinger_players_" + LobbyIP.get(key) + "%");
-
+            int onlines = 0;
+            int plrMax = 0;
+            for (String ip : LobbyIP.get(key).split(" ")) {
+                try {
+                    int plus = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_players_" + ip + "%"));
+                    int plusMax = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_max_" + ip + "%"));
+                    onlines = onlines + plus;
+                    plrMax = plrMax + plusMax;
+                } catch(NumberFormatException e) {
+                    System.out.println(colorize("&eCould not load placeholder Status"));
+                }
+            }
+            String online = PlaceholderAPI.setPlaceholders(null, "%pinger_isonline_" + LobbyIP.get(key).split(" ")[0] + "%");
             ArrayList<String> lore = new ArrayList<>(LobbyLore.get(key));
             lore.add(" ");
             lore.add(versionLore.replace("<version>", LobbyVersion.get(key)));
@@ -96,19 +103,11 @@ public class LobbySelectorLoader {
             if (ChatColor.stripColor(online).equalsIgnoreCase("Offline")) {
                 lore.add(offlineLore);
             } else {
-                lore.add(onlineLore.replace("<max>", plrMax).replace("<online>", plrOnline));
+                lore.add(onlineLore.replace("<max>", String.valueOf(plrMax)).replace("<online>", String.valueOf(onlines)));
             }
 
-            int onlines = 1;
-            try {
-                onlines = Integer.parseInt(ChatColor.stripColor(plrOnline));
-            } catch(NumberFormatException e) {
-                System.out.println(colorize("&eCould not load placeholder Status setting online players to 1"));
-            }
             LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(onlines).build());
             lore.clear();
         }
     }
-
-
 }

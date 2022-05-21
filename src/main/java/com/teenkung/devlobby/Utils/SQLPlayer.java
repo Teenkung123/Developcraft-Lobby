@@ -235,9 +235,13 @@ public class SQLPlayer {
 
     public void forceExecuteVanish(Boolean action) {
         if (action) {
-            VanishAPI.hidePlayer(getPlayer());
+            if (!VanishAPI.isInvisible(getPlayer())) {
+                VanishAPI.hidePlayer(getPlayer());
+            }
         } else {
-            VanishAPI.showPlayer(getPlayer());
+            if (VanishAPI.isInvisible(getPlayer())) {
+                VanishAPI.showPlayer(getPlayer());
+            }
         }
     }
 
