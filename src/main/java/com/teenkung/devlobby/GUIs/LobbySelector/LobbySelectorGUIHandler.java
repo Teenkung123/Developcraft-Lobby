@@ -48,7 +48,7 @@ public class LobbySelectorGUIHandler implements Listener {
 
         try {
             out.writeUTF("Connect");
-            out.writeUTF(server);
+            out.writeUTF(server.split(" ")[0]);
         } catch (Exception e) {
             player.sendMessage(colorize("Error while trying to connect to target server!"));
             return;

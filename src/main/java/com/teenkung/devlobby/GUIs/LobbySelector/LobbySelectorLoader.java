@@ -83,28 +83,39 @@ public class LobbySelectorLoader {
             String onlineLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Online", "&8> &fPlayers Online: &a<online>&f/&a<max>");
             String offlineLore = DevLobby.getInstance().getConfig().getString("LobbySelector.Lores.Offline", "&8> &cCould not connect to target server due to it offline");
             int onlines = 0;
-            int plrMax = 0;
-            for (String ip : LobbyIP.get(key).split(" ")) {
+            //int plrMax = 0;
+            for (String server : LobbyConnect.get(key).split(" ")) {
                 try {
-                    int plus = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_players_" + ip + "%"));
-                    int plusMax = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_max_" + ip + "%"));
-                    onlines = onlines + plus;
-                    plrMax = plrMax + plusMax;
-                } catch(NumberFormatException e) {
-                    System.out.println(colorize("&eCould not load placeholder Status"));
+                    int plus = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%bungee_" + server + "%"));
+                    onlines += plus;
+                }
+                catch (NumberFormatException e) {
+                    System.out.println(DevLobby.colorize("&eCould not load placeholder Status"));
                 }
             }
-            String online = PlaceholderAPI.setPlaceholders(null, "%pinger_isonline_" + LobbyIP.get(key).split(" ")[0] + "%");
+            //for (String ip : LobbyIP.get(key).split(" ")) {
+            //    try {
+            //        int plus = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_players_" + ip + "%"));
+            //        int plusMax = Integer.parseInt(PlaceholderAPI.setPlaceholders(null, "%pinger_max_" + ip + "%"));
+            //        onlines = onlines + plus;
+            //        plrMax = plrMax + plusMax;
+            //    } catch(NumberFormatException e) {
+            //        System.out.println(colorize("&eCould not load placeholder Status"));
+            //    }
+            //}
+            //String online = PlaceholderAPI.setPlaceholders(null, "%pinger_isonline_" + LobbyIP.get(key).split(" ")[0] + "%");
             ArrayList<String> lore = new ArrayList<>(LobbyLore.get(key));
             lore.add(" ");
             lore.add(versionLore.replace("<version>", LobbyVersion.get(key)));
-            lore.add(statusLore.replace("<status>", online));
+            //lore.add(statusLore.replace("<status>", online));
             lore.add(" ");
-            if (ChatColor.stripColor(online).equalsIgnoreCase("Offline")) {
-                lore.add(offlineLore);
-            } else {
-                lore.add(onlineLore.replace("<max>", String.valueOf(plrMax)).replace("<online>", String.valueOf(onlines)));
-            }
+            //if (ChatColor.stripColor(online).equalsIgnoreCase("Offline")) {
+            //    lore.add(offlineLore);
+            //} else {
+            //    lore.add(onlineLore.replace("<max>", String.valueOf(plrMax)).replace("<online>", String.valueOf(onlines)));
+            //}
+
+            lore.add(onlineLore.replace("<online>", String.valueOf(onlines)));
 
             LobbySelectorGUI.getInventory().setItem(LobbySlot.get(key), LobbyItem.get(key).setLoreByArray(DevLobby.colorizeArray(lore)).setAmount(onlines).build());
             lore.clear();

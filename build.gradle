@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.Teenkung'
@@ -35,6 +36,10 @@ repositories {
         name = 'combatlog'
         url = 'https://nexus.sirblobman.xyz/repository/public/'
     }
+    maven {
+        name = "iridiumdevelopment"
+        url = 'https://nexus.iridiumdevelopment.net/repository/maven-releases/'
+    }
 }
 
 dependencies {
@@ -47,7 +52,14 @@ dependencies {
     compileOnly 'com.github.sirblobman.combatlogx:api:11.0.0.0-SNAPSHOT'
     //compileOnly 'com.github.plan-player-analytics:Plan:5.4.1633'
     //testCompileOnly 'com.github.plan-player-analytics:Plan:5.4.1633'
+    implementation 'com.iridium:IridiumColorAPI:1.0.6'
     compileOnly fileTree('libs')
+}
+
+shadowJar {
+    dependencies {
+        include dependency('com.iridium:IridiumColorAPI:1.0.6')
+    }
 }
 
 def targetJavaVersion = 17

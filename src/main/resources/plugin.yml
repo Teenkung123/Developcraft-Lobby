@@ -19,8 +19,7 @@ softdepend:
   - LiteBans
 
 commands:
-  delete-player-data:
-    permission: DevLobby.DeletePlayerData
-    description: Delete Player Data and accounts from same ip from plan
+  open-warp-ui:
+    description: ok
   leave-pvp:
     description: leave pvp

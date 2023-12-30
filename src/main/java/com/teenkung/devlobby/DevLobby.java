@@ -1,9 +1,8 @@
 package com.teenkung.devlobby;
 
-import com.github.sirblobman.combatlogx.api.ICombatLogX;
-import com.github.sirblobman.combatlogx.api.ICombatManager;
-import com.teenkung.devlobby.Command.DeletePlayerData;
+import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import com.teenkung.devlobby.Command.PVPCommand;
+import com.teenkung.devlobby.Command.WarpGUI;
 import com.teenkung.devlobby.GUIs.BuyRank.BuyRankBuilder;
 import com.teenkung.devlobby.GUIs.BuyRank.BuyRankHandler;
 import com.teenkung.devlobby.GUIs.LobbySelector.LobbySelectorGUI;
@@ -22,7 +21,6 @@ import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -110,7 +108,7 @@ public final class DevLobby extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PVPHandler(), this);
         Bukkit.getPluginManager().registerEvents(new DeathHandler(), this);
 
-        Objects.requireNonNull(getCommand("delete-player-data")).setExecutor(new DeletePlayerData());
+        Objects.requireNonNull(getCommand("open-warp-ui")).setExecutor(new WarpGUI());
         Objects.requireNonNull(getCommand("leave-pvp")).setExecutor(new PVPCommand());
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (ItemStack stack : player.getInventory().getContents()) {
@@ -154,36 +152,7 @@ public final class DevLobby extends JavaPlugin {
 
 
     public static String colorize(String message) {
-        if (message == null) { message = ""; }
-        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
-        Matcher matcher = pattern.matcher(message);
-        while (matcher.find()) {
-            String hexCode = message.substring(matcher.start(), matcher.end());
-            String replaceSharp = hexCode.replace('#', 'x');
-
-            char[] ch = replaceSharp.toCharArray();
-            StringBuilder builder = new StringBuilder();
-            for (char c : ch) {
-                builder.append("&").append(c);
-            }
-
-            message = message.replace(hexCode, builder.toString());
-            matcher = pattern.matcher(message);
-        }
-        return ChatColor.translateAlternateColorCodes('&', message);
-        /*old code
-        if (s == null || s.equals(""))
-            return "";
-        if (!Bukkit.getVersion().contains("1.16") && !Bukkit.getVersion().contains("1.17"))
-            return ChatColor.translateAlternateColorCodes('&', s);
-        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
-        Matcher match = pattern.matcher(s);
-        while (match.find()) {
-            String hexColor = s.substring(match.start(), match.end());
-            s = s.replace(hexColor, ChatColor.valueOf(hexColor).toString());
-            match = pattern.matcher(s);
-        }
-        return ChatColor.translateAlternateColorCodes('&', s);*/
+        return IridiumColorAPI.process(message);
     }
 
     public static ArrayList<String> colorizeArray(ArrayList<String> array) {
